@@ -14,17 +14,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout your repository using git
-        uses: actions/checkout@v4
-
-      # Étape ajoutée pour forcer Node v22
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/checkout@v6
+      - name: Install, build, and upload your site
+        uses: withastro/action@v6
         with:
           node-version: 22
           cache: 'npm'
-
-      - name: Install, build, and upload your site
-        uses: withastro/action@v3
 
   deploy:
     needs: build
