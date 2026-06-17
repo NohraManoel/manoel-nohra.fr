@@ -1,0 +1,276 @@
+---
+// src/components/GameCard.astro
+interface Props {
+  title: string;
+  description: string;
+  tags: string[];
+  media?: string[]; 
+  link: string;
+}
+
+const { title, description, tags = [], media = [], link } = Astro.props;
+const id = `carousel-${title.replace(/\s+/g, '-').toLowerCase()}`;
+
+function getYoutubeEmbedUrl(url: string) {
+  if (url.includes('youtube.com') || url.includes('youtu.be')) {
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+    const match = url.match(regExp);
+    if (match && match[2].length === 11) {
+      return `https://www.youtube.com/embed/${match[2]}?rel=0&modestbranding=1`;
+    }
+  }
+  return null;
+}
+---
+
+<div class="game-card">
+  <div class="carousel-container" id={id}>
+    {media.length > 0 ? (
+      <div class="carousel-track">
+        {media.map((item) => {
+          const youtubeEmbed = getYoutubeEmbedUrl(item);
+          
+          return (
+            <div class="carousel-slide">
+              {youtubeEmbed ? (
+                <iframe 
+                  src={youtubeEmbed} 
+                  title={`YouTube video player for ${title}`}
+                  frameborder="0" 
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                  allowfullscreen
+                />
+              ) : item.endsWith('.mp4') ? (
+                <video src={item} autoplay loop muted playsinline />
+              ) : (
+                <img src={item} alt={`Visual of ${title}`} loading="lazy" />
+              )}
+            </div>
+          );
+        })}
+      </div>
+    ) : (
+      <div class="image-placeholder">
+        <span>Pas de média</span>
+      </div>
+    )}
+
+    {media.length > 1 && (
+      <button class="carousel-btn prev" aria-label="Previous image">‹</button>
+      <button class="carousel-btn next" aria-label="Next image">›</button>
+      
+      <div class="carousel-dots">
+        {media.map((_, index) => (
+          <span class={`dot ${index === 0 ? 'active' : ''}`} data-index={index}></span>
+        ))}
+      </div>
+    )}
+  </div>
+
+  <div class="content">
+    <div class="tags-container">
+      {tags.map((tag) => (
+        <span class="badge">{tag}</span>
+      ))}
+    </div>
+    
+    <h3>{title}</h3>
+    <p>{description}</p>
+    <a href={link} target="_blank" rel="noopener noreferrer" class="btn">
+      {Astro.currentLocale === 'en' ? 'View Project' : 'Voir le projet'}
+    </a>
+  </div>
+</div>
+
+<style>
+  .game-card {
+    background-color: var(--bg-card, #1e293b);
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    flex-direction: column;
+    /* Ajout d'une transition pour animer l'entrée dans la carte */
+    transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), 
+                box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), 
+                border-color 0.3s ease;
+    will-change: transform, box-shadow;
+  }
+
+  /* Effet au survol (quand on entre dans la carte) */
+  .game-card:hover {
+    transform: translateY(-6px); /* Soulève légèrement la carte */
+    border-color: var(--accent-light, #60a5fa); /* Colore la bordure */
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3); /* Ajoute une ombre portée profonde */
+  }
+
+  .carousel-container {
+    position: relative;
+    height: 320px;
+    background-color: #1e293b;
+    overflow: hidden;
+  }
+
+  .carousel-track {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .carousel-slide {
+    min-width: 100%;
+    height: 100%;
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+
+  .carousel-slide img, .carousel-slide video, .carousel-slide iframe {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border: none;
+    /* Transition pour l'effet de zoom du média */
+    transition: transform 0.5s ease;
+  }
+
+  /* Effet de léger zoom sur l'image/vidéo quand on survole la carte */
+  .game-card:hover .carousel-slide img,
+  .game-card:hover .carousel-slide video {
+    transform: scale(1.03);
+  }
+
+  .image-placeholder {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+  }
+
+  .carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(10, 15, 29, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #fff;
+    font-size: 1.5rem;
+    padding: 0.2rem 0.6rem;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background 0.2s;
+    user-select: none;
+    z-index: 10;
+  }
+
+  .carousel-btn:hover { background: var(--accent, #3b82f6); }
+  .prev { left: 10px; }
+  .next { right: 10px; }
+
+  .carousel-dots {
+    position: absolute;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    z-index: 10;
+    background: rgba(10, 15, 29, 0.5);
+    padding: 6px 10px;
+    border-radius: 20px;
+    backdrop-filter: blur(4px);
+  }
+
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.4);
+    transition: background-color 0.2s, transform 0.2s;
+  }
+
+  .dot.active {
+    background-color: var(--accent-light, #60a5fa);
+    transform: scale(1.2);
+  }
+
+  .content {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    flex: 1;
+  }
+
+  .tags-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .badge {
+    align-self: flex-start;
+    background-color: rgba(59, 130, 246, 0.2);
+    color: var(--accent-light, #60a5fa);
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+
+  h3 { font-size: 1.3rem; color: #fff; margin-top: 0.2rem; }
+  p { color: var(--text-muted, #94a3b8); font-size: 0.95rem; line-height: 1.5; margin-bottom: 1rem; }
+  
+  .btn {
+    margin-top: auto;
+    background-color: var(--accent, #3b82f6);
+    color: #fff;
+    padding: 0.6rem;
+    text-align: center;
+    border-radius: 6px;
+    font-weight: 600;
+    transition: background-color 0.2s ease;
+  }
+
+  .btn:hover { background-color: var(--accent-light, #60a5fa); }
+</style>
+
+<script define:vars={{ id }}>
+  const container = document.getElementById(id);
+  if (container) {
+    const track = container.querySelector('.carousel-track');
+    const nextBtn = container.querySelector('.next');
+    const prevBtn = container.querySelector('.prev');
+    const slides = container.querySelectorAll('.carousel-slide');
+    const dots = container.querySelectorAll('.dot');
+    
+    let currentIndex = 0;
+
+    if (track && slides.length > 1) {
+      const updateCarousel = () => {
+        track.style.transform = `translateX(-${currentIndex * 100}%)`;
+        
+        dots.forEach((dot, index) => {
+          if (index === currentIndex) {
+            dot.classList.add('active');
+          } else {
+            dot.classList.remove('active');
+          }
+        });
+      };
+
+      nextBtn?.addEventListener('click', (e) => {
+        e.preventDefault();
+        currentIndex = (currentIndex + 1) % slides.length;
+        updateCarousel();
+      });
+
+      prevBtn?.addEventListener('click', (e) => {
+        e.preventDefault();
+        currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+        updateCarousel();
+      });
+    }
+  }
+</script>
