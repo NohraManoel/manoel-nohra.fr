@@ -1,0 +1,240 @@
+---
+// src/pages/parcours.astro
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="My Resume">
+  <section class="parcours-container">
+    <h1>My Journey</h1>
+    
+    <div class="skills-block">
+      <h2>Technical Skills Overview</h2>
+      <ul>
+        <li><strong>Engines & Audio:</strong> Anvil (Ubisoft), Unreal Engine 5, Unity, Wwise</li>
+        <li><strong>Languages & Frameworks:</strong> C++, C#, WPF, XAML</li>
+        <li><strong>Tools & Methods:</strong> Git, Debugging, Optimization, Agile/Teamwork</li>
+      </ul>
+    </div>
+
+    <div class="timeline-section">
+      <h2>Internship Experience</h2>
+      <div class="timeline">
+        
+        <div class="timeline-item">
+          <span class="date">May 2025 - August 2025 (17 weeks)</span>
+          <h3>Gameplay Programmer Intern - Ubisoft Montreal</h3>
+          <span class="location">Montreal, Quebec, Canada</span>
+          <ul>
+            <li>Learned and worked with an in-house game engine (Anvil).</li>
+            <li>Debugged and resolved complex issues.</li>
+            <li>Created systems to streamline feature implementation for designers.</li>
+            <li>Added functionalities to the game engine and tested the game.</li>
+            <li>Worked in a team environment and explained technical terms to non-technical stakeholders.</li>
+          </ul>
+        </div>
+
+        <div class="timeline-item">
+          <span class="date">September 2024 - December 2024 (15 weeks)</span>
+          <h3>Software Engineer Intern - Audiokinetic</h3>
+          <span class="location">Montreal, Quebec, Canada</span>
+          <ul>
+            <li>Deepened knowledge of Unreal Engine 5 and Unity through the Wwise integration.</li>
+            <li>Created a dynamic audio environment system that is easily customizable for designers.</li>
+            <li>Worked independently, researched, and documented technical solutions efficiently.</li>
+            <li>Prepared technical presentations and brought original ideas to production.</li>
+            <li>Found solutions to complex problems and explained technical terms clearly.</li>
+          </ul>
+        </div>
+
+        <div class="timeline-item">
+          <span class="date">January 2024 - May 2024 (16 weeks)</span>
+          <h3>Tools Programmer Intern - Ubisoft Montreal</h3>
+          <span class="location">Montreal, Quebec, Canada</span>
+          <ul>
+            <li>Learned and adopted a new framework and programming language (WPF and XAML).</li>
+            <li>Worked in a team environment, adapting to security and code styling guidelines.</li>
+            <li>Worked on a mandate and even exceeded expectations</li>
+            <li>Found optimization solutions and resolved bugs.</li>
+          </ul>
+        </div>
+
+        <div class="timeline-item">
+          <span class="date">2022 (10 weeks)</span>
+          <h3>Programmer Intern (Urbia Video Game Project) - CDRIN</h3>
+          <span class="location">Matane, Quebec, Canada</span>
+          <ul>
+            <li>Evaluated and analyzed client requirements and communicated effectively.</li>
+            <li>Adapted to a pre-existing external codebase.</li>
+            <li>Contributed innovative ideas and resolved complex development problems.</li>
+            <li>Explained technical elements clearly to the client.</li>
+          </ul>
+        </div>
+
+        <div class="timeline-item">
+          <span class="date">2018 (2 weeks)</span>
+          <h3>Helpdesk Technician Intern - Econocom</h3>
+          <span class="location">Grenoble, France</span>
+          <ul>
+            <li>Evaluated and analyzed customer situations.</li>
+            <li>Proposed appropriate technical solutions.</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="timeline-section">
+      <h2>Education</h2>
+      <div class="timeline">
+
+        <div class="timeline-item">
+          <span class="date">September 2022 - April 2026</span>
+          <h3>Bachelor in Software Engineering (Graduated)</h3>
+          <span class="institution">École de technologie supérieure (ÉTS), Montreal, Quebec, Canada</span>
+          <p>A 4-year program to become a software engineer with 3 internships.</p>
+        </div>
+
+        <div class="timeline-item">
+          <span class="date">2022</span>
+          <h3>Semester 4 in Quebec (Study Abroad)</h3>
+          <span class="institution">Cégep de Matane, Matane, Quebec, Canada</span>
+          <p>Spent the last semester of my DUT at a college in Quebec to graduate.</p>
+        </div>
+
+        <div class="timeline-item">
+          <span class="date">2022</span>
+          <h3>Two-Year University Degree in Computer Science (DUT)</h3>
+          <span class="institution">Université Claude Bernard Lyon 1, France</span>
+          <p>Learned the foundations of computer science and discovered software development while gaining advanced technical knowledge.</p>
+        </div>
+
+        <div class="timeline-item">
+          <span class="date">2020</span>
+          <h3>Scientific High School Diploma, Mathematics Specialization</h3>
+          <span class="institution">Lycée Saint Jean Bosco, Cluses, France</span>
+          <p>Graduated with honors (Mention Bien).</p>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="timeline-section">
+      <h2>Extracurricular Involvement</h2>
+      <div class="timeline">
+
+        <div class="timeline-item">
+          <span class="date">September 2022 - August 2025</span>
+          <h3>Club EsporTS (Esports Club) - Rocket League Team 1 Main Player</h3>
+          <span class="location">ÉTS, Montreal, Quebec, Canada</span>
+          <ul>
+            <li>Participated in competitive leagues and tournaments, maintaining composure under pressure.</li>
+            <li>Organized club events (tournaments, LAN parties) and communicated across teams.</li>
+            <li>Analyzed gameplay data and prepared individual or team training sessions.</li>
+          </ul>
+        </div>
+
+        <div class="timeline-item">
+          <span class="date">2022</span>
+          <h3>Club Conjure (Video Game Creation Club) - Member</h3>
+          <span class="location">ÉTS, Montreal, Quebec, Canada</span>
+          <ul>
+            <li>Organized events (Gala, GameJam) and participated in GameJams.</li>
+            <li>Worked in a team environment to resolve project issues under tight deadlines.</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+
+  </section>
+</BaseLayout>
+
+<style>
+  .parcours-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 1rem 0;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    color: #fff;
+  }
+
+  h2 {
+    font-size: 1.6rem;
+    color: var(--accent-light);
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 0.5rem;
+  }
+
+  .skills-block {
+    background-color: var(--bg-card);
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 3rem;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .skills-block ul {
+    list-style-type: none;
+  }
+
+  .skills-block li {
+    margin-bottom: 0.5rem;
+  }
+
+  .timeline-section {
+    margin-bottom: 3rem;
+  }
+
+  .timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .timeline-item {
+    border-left: 2px solid var(--accent);
+    padding-left: 1.5rem;
+    position: relative;
+  }
+
+  .date {
+    font-size: 0.85rem;
+    color: var(--accent-light);
+    font-weight: 600;
+    display: block;
+  }
+
+  .timeline-item h3 {
+    margin: 0.25rem 0 0.1rem 0;
+    color: #fff;
+    font-size: 1.25rem;
+  }
+
+  .location, .institution {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    font-style: italic;
+    display: block;
+    margin-bottom: 0.75rem;
+  }
+
+  .timeline-item p {
+    color: var(--text-main);
+    line-height: 1.5;
+  }
+
+  .timeline-item ul {
+    padding-left: 1.2rem;
+    color: var(--text-main);
+    line-height: 1.5;
+  }
+
+  .timeline-item li {
+    margin-bottom: 0.25rem;
+  }
+</style>

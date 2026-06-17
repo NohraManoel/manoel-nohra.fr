@@ -1,0 +1,78 @@
+---
+// src/components/Navigation.astro
+
+// Astro détecte la langue actuelle ('fr' ou 'en') depuis l'URL
+const currentLang = Astro.currentLocale || 'en';
+
+// On récupère l'URL actuelle pour savoir où rediriger si on change de langue
+const currentPath = Astro.url.pathname;
+const switchLangLink = currentLang === 'en' 
+  ? `/fr${currentPath}` 
+  : currentPath.replace('/fr', '') || '/';
+---
+
+<nav class="navbar">
+  <div class="nav-container">
+    <a href={currentLang === 'en' ? '/' : '/fr'} class="logo">MN</a>
+    <div class="links">
+      <a href={currentLang === 'en' ? '/' : '/fr'}>
+        {currentLang === 'en' ? 'Home' : 'Accueil'}
+      </a>
+      <a href={currentLang === 'en' ? '/parcours' : '/fr/parcours'}>
+        {currentLang === 'en' ? 'Resume' : 'Parcours'}
+      </a>
+      <a href={switchLangLink} class="lang-switch">
+        {currentLang === 'en' ? 'FR 🇫🇷' : 'EN 🇬🇧'}
+      </a>
+    </div>
+  </div>
+</nav>
+
+<style>
+  .navbar {
+    background-color: rgba(10, 15, 29, 0.8);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--bg-card);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .nav-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+  }
+
+  .logo {
+    font-weight: 800;
+    font-size: 1.2rem;
+    color: #fff;
+  }
+
+  .links {
+    display: flex;
+    align-items: center;
+  }
+
+  .links a {
+    margin-left: 1.5rem;
+    font-weight: 600;
+    color: var(--text-main);
+  }
+
+  .links a:hover {
+    color: var(--accent);
+  }
+
+  .lang-switch {
+    background-color: var(--bg-card);
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 0.9rem;
+  }
+</style>
