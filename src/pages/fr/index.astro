@@ -33,6 +33,15 @@ import GameCard from '../../components/GameCard.astro';
           <li><strong>Courriel :</strong> manoel.nohra@gmail.com</li>
           <li><strong>Ville :</strong> Montréal, Québec, Canada</li>
         </ul>
+        <div class="favorite-games-container">
+          <h4>Jeux Favoris</h4>
+          <div class="games-tags">
+            <span class="game-tag">Rocket League <small>(SSL)</small></span>
+            <span class="game-tag">Metaphor: ReFantazio</span>
+            <span class="game-tag">Final Fantasy X</span>
+            <span class="game-tag">Hollow Knight: Silksong</span>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -257,5 +266,59 @@ import GameCard from '../../components/GameCard.astro';
     .hero h1 {
       font-size: 2.2rem;
     }
+  }
+  /* --- Section Jeux Favoris --- */
+  .favorite-games-container {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .favorite-games-container h4 {
+    font-size: 1.1rem;
+    color: #fff;
+    margin: 0 0 0.8rem 0;
+    position: relative;
+    padding-left: 1.2rem;
+  }
+
+  /* Reprise de la flèche pour garder une cohérence visuelle */
+  .favorite-games-container h4::before {
+    content: "›";
+    position: absolute;
+    left: 0;
+    top: -3px;
+    color: var(--accent-light, #60a5fa);
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+
+  .games-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+
+  .game-tag {
+    background-color: rgba(59, 130, 246, 0.1);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    color: var(--accent-light, #60a5fa);
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px; /* Bords bien arrondis style capsule */
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+  }
+
+  .game-tag small {
+    color: #94a3b8;
+    font-weight: normal;
+    margin-left: 0.2rem;
+  }
+
+  /* Petit effet interactif discrets au survol */
+  .game-tag:hover {
+    background-color: rgba(59, 130, 246, 0.2);
+    border-color: var(--accent-light, #60a5fa);
   }
 </style>
