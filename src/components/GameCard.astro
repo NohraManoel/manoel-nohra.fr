@@ -188,6 +188,7 @@ function getYoutubeEmbedUrl(url: string) {
     border-radius: 50%;
     background-color: rgba(255, 255, 255, 0.4);
     transition: background-color 0.2s, transform 0.2s;
+    cursor: pointer;
   }
 
   .dot.active {
@@ -236,9 +237,11 @@ function getYoutubeEmbedUrl(url: string) {
   .btn:hover { background-color: var(--accent-light, #60a5fa); }
 </style>
 
-<script define:vars={{ id }}>
-  const container = document.getElementById(id);
-  if (container) {
+<script>
+  // Select all carousel containers on the page globally
+  const carousels = document.querySelectorAll('.carousel-container');
+  
+  carousels.forEach((container) => {
     const track = container.querySelector('.carousel-track');
     const nextBtn = container.querySelector('.next');
     const prevBtn = container.querySelector('.prev');
@@ -247,7 +250,7 @@ function getYoutubeEmbedUrl(url: string) {
     
     let currentIndex = 0;
 
-    if (track && slides.length > 1) {
+    if (track instanceof HTMLElement && slides.length > 1) {
       const updateCarousel = () => {
         track.style.transform = `translateX(-${currentIndex * 100}%)`;
         
@@ -271,6 +274,15 @@ function getYoutubeEmbedUrl(url: string) {
         currentIndex = (currentIndex - 1 + slides.length) % slides.length;
         updateCarousel();
       });
+
+      dots.forEach((dot) => {
+        dot.addEventListener('click', (e) => {
+          e.preventDefault();
+          const targetIndex = parseInt(dot.getAttribute('data-index') || '0', 10);
+          currentIndex = targetIndex;
+          updateCarousel();
+        });
+      });
     }
-  }
+  });
 </script>

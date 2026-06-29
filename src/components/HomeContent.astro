@@ -1,0 +1,322 @@
+---
+// src/components/HomeContent.astro
+import GameCard from './GameCard.astro';
+import { translations } from '../data/translations';
+import { projects } from '../data/projects';
+import { calculateAge } from '../utils/date';
+
+interface Props {
+  lang: 'en' | 'fr';
+}
+
+const { lang } = Astro.props;
+const t = translations[lang];
+
+const age = calculateAge('2002-10-30');
+---
+
+<div class="home-container animate-fade-in">
+  <section class="hero">
+    <h1 fragment set:html={t.heroTitle}></h1>
+    <p>{t.heroSubtitle}</p>
+  </section>
+
+  <section class="about-section">
+    <h2>{t.aboutTitle}</h2>
+    <p class="about-lead">{t.aboutLead}</p>
+    
+    <div class="about-content">
+      <div class="about-profile">
+        <img src="/images/profile.jpg" alt="Manoël Nohra" class="profile-img" />
+      </div>
+      
+      <div class="about-details">
+        <h3>{t.aboutDetailsTitle}</h3>
+
+        <ul class="details-list">
+          <li>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="details-icon" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+            <div><strong>{t.labelBirth}:</strong> {t.valBirth}</div>
+          </li>
+          <li>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="details-icon" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            <div><strong>{t.labelAge}:</strong> {age} {lang === 'en' ? 'years old' : 'ans'}</div>
+          </li>
+          <li>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="details-icon" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+            <div><strong>{t.labelWebsite}:</strong> <a href={`https://${t.valBirth}`} target="_blank" rel="noopener noreferrer">manoel-nohra.fr</a></div>
+          </li>
+          <li>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="details-icon" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5"></path></svg>
+            <div><strong>{t.labelDegree}:</strong> {t.valDegree}</div>
+          </li>
+          <li>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="details-icon" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+            <div>
+              <strong>{t.labelPhone}:</strong> 
+              <span>{t.valPhoneFR}</span><br>
+              <span class="phone-space">{t.valPhoneCA}</span>
+            </div>
+          </li>
+          <li>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="details-icon" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+            <div><strong>{t.labelEmail}:</strong> <a href={`mailto:${t.valEmail}`}>{t.valEmail}</a></div>
+          </li>
+          <li>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="details-icon" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+            <div><strong>{t.labelCity}:</strong> {t.valCity}</div>
+          </li>
+        </ul>
+
+        <div class="favorite-games-container">
+          <h4>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="details-icon" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+            {t.favoriteGamesTitle}
+          </h4>
+          <div class="games-tags">
+            <span class="game-tag">Rocket League <small>(SSL)</small></span>
+            <span class="game-tag">Metaphor: ReFantazio</span>
+            <span class="game-tag">Final Fantasy X</span>
+            <span class="game-tag">Hollow Knight: Silksong</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="games-section">
+    <h2>{t.myGamesTitle}</h2>
+    <div class="games-grid">
+      {projects.map((project) => (
+        <GameCard 
+          title={project.title}
+          description={project.description[lang]}
+          tags={project.tags[lang]}
+          media={project.media}
+          link={project.link}
+        />
+      ))}
+    </div>
+  </section>
+</div>
+
+<style>
+  .home-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0;
+  }
+
+  /* Fade-in Animation */
+  .animate-fade-in {
+    animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(15px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Centrage global du contenu de la page */
+  .hero, .about-section, .games-section {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+  }
+
+  /* Style de la section d'introduction */
+  .hero {
+    text-align: center;
+    padding: 4rem 1rem;
+  }
+
+  .hero h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: #fff;
+    line-height: 1.2;
+  }
+
+  .hero :global(.highlight) {
+    color: var(--accent-light, #60a5fa);
+    font-weight: 700;
+  }
+
+  .hero p {
+    font-size: 1.2rem;
+    color: var(--text-muted, #94a3b8);
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  /* Titres de sections */
+  .about-section h2, .games-section h2 {
+    font-size: 2rem;
+    color: #fff;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 0.5rem;
+  }
+
+  /* Section About Me */
+  .about-lead {
+    color: var(--text-main, #e2e8f0);
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    font-size: 1.05rem;
+  }
+
+  .about-content {
+    display: flex;
+    gap: 3rem;
+    align-items: flex-start;
+  }
+
+  .about-profile {
+    flex-shrink: 0;
+    width: 300px;
+  }
+
+  .profile-img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    object-fit: cover;
+  }
+
+  .about-details {
+    flex: 1;
+  }
+
+  .about-details h3 {
+    font-size: 1.5rem;
+    color: var(--accent-light, #60a5fa);
+    margin-bottom: 1.5rem;
+  }
+
+  .details-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.2rem 2rem;
+  }
+
+  .details-list li {
+    color: var(--text-main, #e2e8f0);
+    line-height: 1.4;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.8rem;
+  }
+
+  .details-icon {
+    width: 18px;
+    height: 18px;
+    color: var(--accent-light, #60a5fa);
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .details-list strong {
+    color: #fff;
+  }
+
+  .phone-space {
+    padding-left: 0;
+    display: inline-block;
+    margin-top: 0.2rem;
+  }
+
+  /* Grille réactive pour les GameCards */
+  .games-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
+    gap: 2.5rem;
+  }
+
+  /* Ajustements pour tablettes et mobiles */
+  @media (max-width: 768px) {
+    .about-content {
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+    }
+    .about-profile {
+      width: 250px;
+    }
+    .details-list {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+  }
+
+  @media (max-width: 500px) {
+    .games-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+    .hero h1 {
+      font-size: 2.2rem;
+    }
+  }
+
+  /* --- Section Jeux Favoris --- */
+  .favorite-games-container {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .favorite-games-container h4 {
+    font-size: 1.1rem;
+    color: #fff;
+    margin: 0 0 0.8rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .favorite-games-container h4 .details-icon {
+    margin-top: 0;
+  }
+
+  .games-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+
+  .game-tag {
+    background-color: rgba(59, 130, 246, 0.1);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    color: var(--accent-light, #60a5fa);
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px; /* Bords bien arrondis style capsule */
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+  }
+
+  .game-tag small {
+    color: #94a3b8;
+    font-weight: normal;
+    margin-left: 0.2rem;
+  }
+
+  /* Petit effet interactif discrets au survol */
+  .game-tag:hover {
+    background-color: rgba(59, 130, 246, 0.2);
+    border-color: var(--accent-light, #60a5fa);
+    transform: scale(1.03);
+  }
+</style>

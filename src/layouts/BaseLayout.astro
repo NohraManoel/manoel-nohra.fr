@@ -2,10 +2,20 @@
 // src/layouts/BaseLayout.astro
 interface Props {
   title: string;
+  description?: string;
 }
 
-const { title } = Astro.props;
+const { title, description } = Astro.props;
 const currentLang = Astro.currentLocale || 'en';
+
+const defaultDesc = currentLang === 'en' 
+  ? "Manoël Nohra - Software Engineer & Gameplay Programmer Portfolio. Explore game development projects and professional journey."
+  : "Manoël Nohra - Portfolio de Génie Logiciel & Programmation Gameplay. Découvrez ses projets de jeu et son parcours professionnel.";
+
+const metaDescription = description || defaultDesc;
+const siteUrl = Astro.site || 'https://manoel-nohra.fr';
+const canonicalURL = new URL(Astro.url.pathname, siteUrl);
+const socialImageURL = new URL('/images/profile.jpg', siteUrl);
 
 // On importe notre composant de navigation isolé
 import Navigation from '../components/Navigation.astro';
@@ -17,6 +27,26 @@ import Navigation from '../components/Navigation.astro';
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title} | Portfolio</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content={metaDescription} />
+    <link rel="canonical" href={canonicalURL} />
+    <meta name="generator" content={Astro.generator} />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={Astro.url} />
+    <meta property="og:title" content={`${title} | Portfolio`} />
+    <meta property="og:description" content={metaDescription} />
+    <meta property="og:image" content={socialImageURL} />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={Astro.url} />
+    <meta property="twitter:title" content={`${title} | Portfolio`} />
+    <meta property="twitter:description" content={metaDescription} />
+    <meta property="twitter:image" content={socialImageURL} />
+
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -46,6 +76,10 @@ import Navigation from '../components/Navigation.astro';
     --text-muted: #94a3b8;
   }
 
+  html {
+    scroll-behavior: smooth;
+  }
+
   * {
     box-sizing: border-box;
     margin: 0;
@@ -59,6 +93,7 @@ import Navigation from '../components/Navigation.astro';
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    overflow-x: hidden;
   }
 
   main {
