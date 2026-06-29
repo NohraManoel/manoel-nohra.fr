@@ -1,10 +1,10 @@
 ---
 // src/components/ResumeContent.astro
-import { translations } from '../data/translations';
-import { resumeData } from '../data/resume';
+import { translations } from "../data/translations";
+import { resumeData } from "../data/resume";
 
 interface Props {
-  lang: 'en' | 'fr';
+  lang: "en" | "fr";
 }
 
 const { lang } = Astro.props;
@@ -14,67 +14,77 @@ const data = resumeData[lang];
 
 <div class="resume-container animate-fade-in">
   <h1>{t.journeyTitle}</h1>
-  
+
   <div class="skills-block">
     <h2>{t.skillsTitle}</h2>
     <ul>
-      <li><strong>{t.skillsEngines}:</strong> Anvil (Ubisoft), Unreal Engine 5, Unity, Wwise</li>
-      <li><strong>{t.skillsLanguages}:</strong> C++, C#, WPF, XAML</li>
-      <li><strong>{t.skillsTools}:</strong> Git, Debugging, Optimization, Agile/Teamwork</li>
+      {
+        data.skills.map((skill) => (
+          <li>
+            <strong>{skill.category}:</strong> {skill.items}
+          </li>
+        ))
+      }
     </ul>
   </div>
 
   <div class="timeline-section">
     <h2>{t.timelineInternships}</h2>
     <div class="timeline">
-      {data.internships.map((item) => (
-        <div class="timeline-item">
-          <span class="date">{item.date}</span>
-          <h3>{item.title}</h3>
-          <span class="location">{item.subtitle}</span>
-          {item.bullets && item.bullets.length > 0 && (
-            <ul>
-              {item.bullets.map((bullet) => (
-                <li>{bullet}</li>
-              ))}
-            </ul>
-          )}
-        </div>
-      ))}
+      {
+        data.internships.map((item) => (
+          <div class="timeline-item">
+            <span class="date">{item.date}</span>
+            <h3>{item.title}</h3>
+            <span class="location">{item.subtitle}</span>
+            {item.bullets && item.bullets.length > 0 && (
+              <ul>
+                {item.bullets.map((bullet) => (
+                  <li>{bullet}</li>
+                ))}
+              </ul>
+            )}
+          </div>
+        ))
+      }
     </div>
   </div>
 
   <div class="timeline-section">
     <h2>{t.timelineEducation}</h2>
     <div class="timeline">
-      {data.education.map((item) => (
-        <div class="timeline-item">
-          <span class="date">{item.date}</span>
-          <h3>{item.title}</h3>
-          <span class="institution">{item.subtitle}</span>
-          {item.description && <p>{item.description}</p>}
-        </div>
-      ))}
+      {
+        data.education.map((item) => (
+          <div class="timeline-item">
+            <span class="date">{item.date}</span>
+            <h3>{item.title}</h3>
+            <span class="institution">{item.subtitle}</span>
+            {item.description && <p>{item.description}</p>}
+          </div>
+        ))
+      }
     </div>
   </div>
 
   <div class="timeline-section">
     <h2>{t.timelineExtracurricular}</h2>
     <div class="timeline">
-      {data.extracurriculars.map((item) => (
-        <div class="timeline-item">
-          <span class="date">{item.date}</span>
-          <h3>{item.title}</h3>
-          <span class="location">{item.subtitle}</span>
-          {item.bullets && item.bullets.length > 0 && (
-            <ul>
-              {item.bullets.map((bullet) => (
-                <li>{bullet}</li>
-              ))}
-            </ul>
-          )}
-        </div>
-      ))}
+      {
+        data.extracurriculars.map((item) => (
+          <div class="timeline-item">
+            <span class="date">{item.date}</span>
+            <h3>{item.title}</h3>
+            <span class="location">{item.subtitle}</span>
+            {item.bullets && item.bullets.length > 0 && (
+              <ul>
+                {item.bullets.map((bullet) => (
+                  <li>{bullet}</li>
+                ))}
+              </ul>
+            )}
+          </div>
+        ))
+      }
     </div>
   </div>
 </div>
@@ -191,7 +201,8 @@ const data = resumeData[lang];
     font-size: 1.25rem;
   }
 
-  .location, .institution {
+  .location,
+  .institution {
     font-size: 0.9rem;
     color: var(--text-muted);
     font-style: italic;
