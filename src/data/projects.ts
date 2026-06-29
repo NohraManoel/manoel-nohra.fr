@@ -1,6 +1,6 @@
 export interface Project {
   title: string;
-  description: Record<'en' | 'fr', string>;
+  description: Record<'en' | 'fr', string | string[]>;
   tags: Record<'en' | 'fr', string[]>;
   media: string[];
   link: string;
@@ -10,8 +10,18 @@ export const projects: Project[] = [
   {
     title: "Panic On Comic City !",
     description: {
-      en: "🏆 Won Best Accessibility Award & Nominated for Best Design and Best Technical Innovation at the Ubisoft Gamelab 2026. An asymmetrical co-op game with an 80s-90s theme, developed over 10 weeks. Players team up as a roller and a snake to maximize their score, featuring flexible controls supporting dual gamepads, keyboard co-op, or solo keyboard play.",
-      fr: "🏆 Nous avons remporté le prix de la Meilleure Accessibilité & Nommé pour le Meilleur Design et la Meilleure Innovation Technique au Concours Universitaire Ubisoft 2026. Un jeu de coopération asymétrique sur le thème des années 80-90, développé en 10 semaines. Les joueurs font équipe en incarnant un roller et un serpent pour maximiser leur score. Propose des contrôles flexibles compatibles avec deux manettes, un combo manette/clavier ou un clavier seul."
+      en: [
+        "🏆 Won Best Accessibility Award & Nominated for Best Design and Best Technical Innovation at the Ubisoft Gamelab 2026. An asymmetrical co-op game with an 80s-90s theme, developed over 10 weeks.",
+        "Collaborated closely with artists and game designers under strict deadlines.",
+        "Applied 3D mathematics to calculate custom physics for a player (the roller) sliding along a dynamically moving and deforming mesh (the snake).",
+        "Developed the core gameplay architecture inspired by Curve Rush mechanics."
+      ],
+      fr: [
+        "🏆 Prix de la Meilleure Accessibilité & Nommé pour le Meilleur Design et la Meilleure Innovation Technique au Concours Universitaire Ubisoft 2026. Un jeu de coopération asymétrique sur le thème des années 80-90, développé en 10 semaines.",
+        "Collaboration étroite avec des artistes et game designers sous des délais serrés.",
+        "Application des mathématiques 3D pour calculer la physique personnalisée d'un joueur (le roller) glissant le long d'un maillage en mouvement et en déformation dynamique (le serpent).",
+        "Développement de l'architecture de gameplay principale inspirée des mécaniques de Curve Rush."
+      ]
     },
     tags: {
       en: ["Unity", "Co-op", "PC", "Ubisoft 2026"],
@@ -44,8 +54,18 @@ export const projects: Project[] = [
   {
     title: "The Plague",
     description: {
-      en: "🏆 Best Sound Design. A top-down, procedurally generated game developed in 48 hours during the Montreal GameJam. Reversing traditional roles, you play as the Black Plague with the objective of hunting down the doctor before he gathers a cure. Features a variety of gameplay abilities including a tracking radar, a dash mechanics, slows, and a passive infection zone to corrupt civilians and expand your vision.",
-      fr: "🏆 Meilleur Sound Design. Un jeu en vue de dessus généré de manière procédurale, développé en 48 heures lors de la Montreal GameJam. Vous incarnez la peste noire avec pour objectif de traquer le médecin avant qu'il ne trouve un remède. Propose diverses compétences de gameplay incluant un radar de suivi, une mécanique de dash, des ralentissements et une zone d'infection passive pour corrompre les civils et étendre votre vision."
+      en: [
+        "🏆 Best Sound Design. A top-down, procedurally generated game developed in 48 hours during the Montreal GameJam. Reversing traditional roles, you play as the Black Plague with the objective of hunting down the doctor before he gathers a cure.",
+        "Stepped in as Game Designer to conceptualize mechanics aligned with the jam's constraints and communicated the technical vision to the team.",
+        "Programmed core C# mechanics, including camera controllers and base character movement.",
+        "Prototyped enemy AI behaviors (the Doctor) and managed project version control by resolving Git merge conflicts."
+      ],
+      fr: [
+        "🏆 Meilleur Sound Design. Un jeu en vue de dessus généré de manière procédurale, développé en 48 heures lors de la Montreal GameJam. Vous incarnez la peste noire avec pour objectif de traquer le médecin avant qu'il ne trouve un remède.",
+        "Rôle de Game Designer pour conceptualiser des mécaniques alignées sur les contraintes de la Jam et communiquer la vision technique à l'équipe.",
+        "Programmation des mécaniques C# de base, y compris les contrôleurs de caméra et les mouvements fondamentaux des personnages.",
+        "Prototype de l'IA ennemie (le Médecin) et gestion du contrôle de version en résolvant les conflits de fusion Git."
+      ]
     },
     tags: {
       en: ["Unity", "GameJam", "2023"],
@@ -59,8 +79,16 @@ export const projects: Project[] = [
   {
     title: "Tower Defense Prototype",
     description: {
-      en: "Used Unreal Engine 5 to create a tower defense prototype during my free time. The game is as basic as a Tower Defense, I may expand the game into a roguelike if the design comes up nice. I developed the core mechanics of the game, including enemy pathfinding, tower placement, and wave management, while also implementing a simple UI to display player health and resources.",
-      fr: "Utilisation d'Unreal Engine 5 pour créer un prototype de tower defense pendant mon temps libre. Le jeu repose sur les bases classiques du genre, avec la possibilité de faire évoluer le design vers un roguelike. J'ai développé les mécaniques fondamentales du jeu, notamment le pathfinding des ennemis, le placement des tours et la gestion des vagues, tout en implémentant une interface utilisateur simple pour afficher la santé et les ressources du joueur."
+      en: [
+        "Designed and developed gameplay, UI/UX, and code architecture utilizing a combination of C++ and Blueprints under Unreal Engine 5.",
+        "Leveraged ChatGPT to accelerate engine onboarding and research optimal architectural patterns.",
+        "Developed a scalable foundational base to facilitate easy gameplay extensions and data-driven implementation."
+      ],
+      fr: [
+        "Conception et développement du gameplay, de l'UI/UX et de l'architecture du code à l'aide d'une combinaison de C++ et de Blueprints sous Unreal Engine 5.",
+        "Utilisation de ChatGPT pour accélérer la prise en main du moteur et rechercher des patterns architecturaux optimaux.",
+        "Développement d'une base évolutive pour faciliter l'extension des fonctionnalités et l'implémentation guidée par les données."
+      ]
     },
     tags: {
       en: ["Unreal Engine 5", "Tower Defense", "2025"],

@@ -2,7 +2,7 @@
 // src/components/GameCard.astro
 interface Props {
   title: string;
-  description: string;
+  description: string | string[];
   tags: string[];
   media?: string[]; 
   link: string;
@@ -75,7 +75,18 @@ function getYoutubeEmbedUrl(url: string) {
     </div>
     
     <h3>{title}</h3>
-    <p>{description}</p>
+    {Array.isArray(description) ? (
+      <div class="project-description-wrapper">
+        <p class="project-intro">{description[0]}</p>
+        <ul class="project-bullets">
+          {description.slice(1).map((bullet) => (
+            <li>{bullet}</li>
+          ))}
+        </ul>
+      </div>
+    ) : (
+      <p>{description}</p>
+    )}
     <a href={link} target="_blank" rel="noopener noreferrer" class="btn">
       {Astro.currentLocale === 'en' ? 'View Project' : 'Voir le projet'}
     </a>
@@ -222,6 +233,26 @@ function getYoutubeEmbedUrl(url: string) {
 
   h3 { font-size: 1.3rem; color: #fff; margin-top: 0.2rem; }
   p { color: var(--text-muted, #94a3b8); font-size: 0.95rem; line-height: 1.5; margin-bottom: 1rem; }
+  
+  .project-intro {
+    color: var(--text-muted, #94a3b8);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin-bottom: 0.6rem;
+  }
+
+  .project-bullets {
+    color: var(--text-muted, #94a3b8);
+    font-size: 0.9rem;
+    line-height: 1.45;
+    margin-bottom: 1rem;
+    padding-left: 1.1rem;
+    list-style-type: disc;
+  }
+
+  .project-bullets li {
+    margin-bottom: 0.4rem;
+  }
   
   .btn {
     margin-top: auto;
