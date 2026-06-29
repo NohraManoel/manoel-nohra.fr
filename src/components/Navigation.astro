@@ -21,7 +21,11 @@ const switchLangLink = currentLang === 'en'
       <a href={currentLang === 'en' ? '/parcours' : '/fr/parcours'}>
         {currentLang === 'en' ? 'Resume' : 'Parcours'}
       </a>
-      <a href={switchLangLink} class="lang-switch">
+      <a 
+        href={switchLangLink} 
+        class="lang-switch" 
+        aria-label={currentLang === 'en' ? "Switch website language to French" : "Changer la langue du site en Anglais"}
+      >
         {currentLang === 'en' ? 'FR 🇫🇷' : 'EN 🇬🇧'}
       </a>
     </div>
