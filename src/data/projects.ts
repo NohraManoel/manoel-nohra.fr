@@ -95,9 +95,7 @@ export const projects: Project[] = [
       fr: ["Unreal Engine 5", "Tower Defense", "2025"]
     },
     media: [
-      "/images/TD/InGame1.png",
-      "/images/TD/InGame.png",
-      "/images/TD/InGame3.png"
+      "https://youtu.be/6oPt-Pxkykk"
     ],
     link: "https://github.com/NohraManoel/TD"
   },
