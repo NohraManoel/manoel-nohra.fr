@@ -110,8 +110,8 @@ export const projects: Project[] = [
       ]
     },
     tags: {
-      en: ["Tower Defense", "2025", "Strategy"],
-      fr: ["Tower Defense", "2025", "Stratégie"]
+      en: ["Tower Defense", "On Going", "Strategy"],
+      fr: ["Tower Defense", "En cours", "Stratégie"]
     },
     technologies: [
       { name: "Unreal Engine 5", icon: "skill-icons:unrealengine" },
@@ -155,8 +155,8 @@ export const projects: Project[] = [
       fr: "Un jeu de tir à la première personne solo mettant en scène des mécaniques de mouvement dynamiques telles que le double saut, le grappin, la glissade et les tirs par ricochet. Chaque niveau restreint ou active des mécaniques spécifiques, forçant le joueur à s'adapter. Développé de manière autonome sous la supervision des professeurs lors de mon semestre d'échange à Matane."
     },
     tags: {
-      en: ["FPS", "2023", "Movement Shooter", "Solo"],
-      fr: ["FPS", "2023", "Shooter de mouvement", "Solo"]
+      en: ["FPS", "2022", "Movement Shooter", "Solo"],
+      fr: ["FPS", "2022", "Shooter de mouvement", "Solo"]
     },
     technologies: [
       { name: "Unreal Engine 4", icon: "skill-icons:unrealengine" },

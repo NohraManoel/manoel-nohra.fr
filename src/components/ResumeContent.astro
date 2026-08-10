@@ -18,7 +18,7 @@ const data = resumeData[lang];
 <div class="resume-container animate-fade-in">
   <h1 class="section-title"><Icon name="mdi:map-marker-path" class="title-icon" /> {t.journeyTitle}</h1>
 
-  <div class="section-container">
+  <div class="section-container" id="skills">
     <h2 class="section-title"><Icon name="mdi:tools" class="title-icon" /> {t.skillsTitle}</h2>
     <div class="carousel-wrapper">
       <button class="carousel-btn prev" aria-label="Previous"><Icon name="mdi:chevron-left" /></button>
@@ -36,7 +36,7 @@ const data = resumeData[lang];
     </div>
   </div>
 
-  <div class="section-container">
+  <div class="section-container" id="experience">
     <h2 class="section-title"><Icon name="mdi:briefcase" class="title-icon" /> {t.timelineInternships}</h2>
     <div class="carousel-wrapper">
       <button class="carousel-btn prev" aria-label="Previous"><Icon name="mdi:chevron-left" /></button>
@@ -51,14 +51,14 @@ const data = resumeData[lang];
     </div>
   </div>
 
-  <div class="section-container">
+  <div class="section-container" id="education">
     <h2 class="section-title"><Icon name="mdi:school" class="title-icon" /> {t.timelineEducation}</h2>
     <div class="carousel-wrapper">
       <button class="carousel-btn prev" aria-label="Previous"><Icon name="mdi:chevron-left" /></button>
       <div class="carousel-track experience-carousel">
         {data.education.map((item) => (
-          <div class="carousel-slide exp-slide">
-            <ExperienceCard {...item} />
+          <div class="carousel-slide exp-slide auto-height-slide">
+            <ExperienceCard {...item} disableFlip={true} />
           </div>
         ))}
       </div>
@@ -66,14 +66,14 @@ const data = resumeData[lang];
     </div>
   </div>
 
-  <div class="section-container">
+  <div class="section-container" id="extracurricular">
     <h2 class="section-title"><Icon name="mdi:gamepad-variant" class="title-icon" /> {t.timelineExtracurricular}</h2>
     <div class="carousel-wrapper">
       <button class="carousel-btn prev" aria-label="Previous"><Icon name="mdi:chevron-left" /></button>
       <div class="carousel-track experience-carousel">
         {data.extracurriculars.map((item) => (
-          <div class="carousel-slide exp-slide">
-            <ExperienceCard {...item} />
+          <div class="carousel-slide exp-slide auto-height-slide">
+            <ExperienceCard {...item} disableFlip={true} />
           </div>
         ))}
       </div>
@@ -136,20 +136,25 @@ const data = resumeData[lang];
     display: flex;
     gap: 1.5rem;
     overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
     padding: 1rem 0.5rem;
+    cursor: grab;
     /* Hide scrollbar for aesthetics */
     scrollbar-width: none;
     -ms-overflow-style: none;
+  }
+  .carousel-track:active {
+    cursor: grabbing;
   }
   .carousel-track::-webkit-scrollbar {
     display: none;
   }
 
   .carousel-slide {
-    scroll-snap-align: start;
-    height: 400px; /* fixed height for cards to look uniform */
+    height: 450px; /* fixed height for cards to look uniform */
+  }
+
+  .auto-height-slide {
+    height: auto !important;
   }
 
   .skill-slide {
@@ -222,7 +227,8 @@ const data = resumeData[lang];
 
       prevBtn.addEventListener('click', () => {
         if (track.scrollLeft <= 5) {
-          track.scrollTo({ left: track.scrollWidth, behavior: 'smooth' });
+          const maxScroll = track.scrollWidth - track.clientWidth;
+          track.scrollTo({ left: maxScroll, behavior: 'smooth' });
         } else {
           const scrollAmount = track.clientWidth * 0.8; 
           track.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
@@ -237,6 +243,50 @@ const data = resumeData[lang];
           track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
         }
       });
+
+      // Drag to scroll logic
+      let isDown = false;
+      let startX = 0;
+      let scrollLeft = 0;
+      let isDragging = false;
+
+      track.addEventListener('mousedown', (e) => {
+        isDown = true;
+        isDragging = false;
+        startX = e.pageX - track.offsetLeft;
+        scrollLeft = track.scrollLeft;
+      });
+
+      track.addEventListener('mouseleave', () => {
+        isDown = false;
+      });
+
+      track.addEventListener('mouseup', () => {
+        isDown = false;
+        // Delay clearing isDragging so the capture-phase click handler can intercept it
+        setTimeout(() => {
+          isDragging = false;
+        }, 50);
+      });
+
+      track.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - track.offsetLeft;
+        const walk = (x - startX) * 2; // scroll speed multiplier
+        if (Math.abs(walk) > 5) {
+          isDragging = true;
+        }
+        track.scrollLeft = scrollLeft - walk;
+      });
+
+      // Prevent clicks (e.g., flipping the card) if we just dragged
+      track.addEventListener('click', (e) => {
+        if (isDragging) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+      }, true); // use capture phase
     }
   });
 </script>
