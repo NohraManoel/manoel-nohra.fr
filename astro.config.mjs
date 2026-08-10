@@ -1,10 +1,12 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
+import icon from 'astro-icon';
 
 // https://astro.build/config
 export default defineConfig({
     site: 'https://manoel-nohra.fr',
     trailingSlash : 'ignore',
+    integrations: [icon()],
     i18n: {
     defaultLocale: 'en',
     locales: ['en', 'fr'],

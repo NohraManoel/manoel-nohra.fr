@@ -1,0 +1,229 @@
+---
+// src/components/ProjectFilter.astro
+interface Props {
+  allTags: string[];
+  allTechs: string[];
+  lang: 'en' | 'fr';
+}
+
+const { allTags, allTechs, lang } = Astro.props;
+
+const searchPlaceholder = lang === 'en' ? 'Search projects (title, skill, etc...)' : 'Rechercher des projets (titre, compétence, etc...)';
+---
+<div class="project-filter">
+  <div class="search-bar">
+    <div class="search-input-wrapper">
+      <input type="text" id="project-search" placeholder={searchPlaceholder} />
+    </div>
+    <button id="clear-filters" class="clear-filters-btn" aria-label="Clear all filters">
+      {lang === 'en' ? 'Clear All' : 'Tout effacer'}
+    </button>
+  </div>
+  
+  <div class="filter-chips">
+    <span class="filter-group-label">{lang === 'en' ? 'Technologies:' : 'Technologies:'}</span>
+    {allTechs.map(tech => (
+      <button class="filter-chip" data-filter-type="techs" data-filter-val={tech.toLowerCase()}>{tech}</button>
+    ))}
+  </div>
+  
+  <div class="filter-chips">
+    <span class="filter-group-label">{lang === 'en' ? 'Tags:' : 'Tags:'}</span>
+    {allTags.map(tag => (
+      <button class="filter-chip" data-filter-type="tags" data-filter-val={tag.toLowerCase()}>{tag}</button>
+    ))}
+  </div>
+</div>
+
+<script>
+  const searchInput = document.getElementById('project-search') as HTMLInputElement;
+  const clearBtn = document.getElementById('clear-filters');
+  const filterChips = document.querySelectorAll('.filter-chip');
+  const gameCards = document.querySelectorAll('.game-card') as NodeListOf<HTMLElement>;
+
+  function applyFilters() {
+    if (!searchInput) return;
+
+    const query = searchInput.value.toLowerCase().trim();
+    const activeChips = Array.from(filterChips).filter(chip => chip.classList.contains('active'));
+    
+    // Toggle the clear button visibility based on whether filters are active
+    if (clearBtn) {
+      if (query || activeChips.length > 0) {
+        clearBtn.classList.add('visible');
+      } else {
+        clearBtn.classList.remove('visible');
+      }
+    }
+    
+    const activeTags = activeChips.filter(c => c.getAttribute('data-filter-type') === 'tags').map(c => c.getAttribute('data-filter-val')!);
+    const activeTechs = activeChips.filter(c => c.getAttribute('data-filter-type') === 'techs').map(c => c.getAttribute('data-filter-val')!);
+
+    let visibleCount = 0;
+
+    // Pass 1: Strict Match (AND logic)
+    gameCards.forEach(card => {
+      const cardSearchText = card.getAttribute('data-search-text') || '';
+      const cardTags = (card.getAttribute('data-tags') || '').split(',');
+      const cardTechs = (card.getAttribute('data-techs') || '').split(',');
+
+      const matchesSearch = query === '' || cardSearchText.includes(query);
+      
+      const matchesAllTags = activeTags.every(t => cardTags.includes(t));
+      const matchesAllTechs = activeTechs.every(t => cardTechs.includes(t));
+      
+      if (matchesSearch && matchesAllTags && matchesAllTechs) {
+        card.style.display = '';
+        visibleCount++;
+      } else {
+        card.style.display = 'none';
+      }
+    });
+
+    // Pass 2: Fallback to OR logic if 0 results
+    if (visibleCount === 0 && (activeTags.length > 0 || activeTechs.length > 0)) {
+      gameCards.forEach(card => {
+        const cardSearchText = card.getAttribute('data-search-text') || '';
+        const cardTags = (card.getAttribute('data-tags') || '').split(',');
+        const cardTechs = (card.getAttribute('data-techs') || '').split(',');
+
+        const matchesSearch = query === '' || cardSearchText.includes(query);
+        
+        const hasAnyActiveFilter = activeChips.some(chip => {
+            const type = chip.getAttribute('data-filter-type');
+            const val = chip.getAttribute('data-filter-val');
+            if (type === 'tags') return cardTags.includes(val!);
+            if (type === 'techs') return cardTechs.includes(val!);
+            return false;
+        });
+
+        if (matchesSearch && hasAnyActiveFilter) {
+          card.style.display = '';
+        }
+      });
+    }
+  }
+
+  searchInput?.addEventListener('input', applyFilters);
+
+  filterChips.forEach(chip => {
+    chip.addEventListener('click', () => {
+      chip.classList.toggle('active');
+      applyFilters();
+    });
+  });
+
+  if (clearBtn) {
+    clearBtn.addEventListener('click', () => {
+      searchInput.value = '';
+      filterChips.forEach(c => c.classList.remove('active'));
+      applyFilters();
+    });
+  }
+
+  // Initial call
+  applyFilters();
+</script>
+
+<style>
+  .project-filter {
+    background: var(--bg-card, #1e293b);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .search-bar {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  .search-input-wrapper {
+    flex: 1;
+  }
+
+  .search-input-wrapper input {
+    width: 100%;
+    padding: 0.8rem 1.2rem;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: #0f172a;
+    color: #fff;
+    font-size: 1rem;
+    transition: border-color 0.2s;
+  }
+
+  .search-input-wrapper input:focus {
+    outline: none;
+    border-color: var(--accent-light, #60a5fa);
+  }
+
+  .clear-filters-btn {
+    padding: 0.8rem 1.5rem;
+    background-color: rgba(255, 255, 255, 0.05);
+    color: #94a3b8;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(10px);
+  }
+
+  .clear-filters-btn.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0);
+  }
+
+  .clear-filters-btn:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
+  }
+
+  .filter-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    align-items: center;
+  }
+
+  .filter-group-label {
+    color: var(--text-muted, #94a3b8);
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-right: 0.5rem;
+    min-width: 100px;
+  }
+
+  .filter-chip {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #cbd5e1;
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: all 0.2s ease;
+    user-select: none;
+  }
+
+  .filter-chip:hover {
+    background: rgba(255, 255, 255, 0.15);
+  }
+
+  .filter-chip.active {
+    background: var(--accent, #3b82f6);
+    border-color: var(--accent-light, #60a5fa);
+    color: #fff;
+  }
+</style>

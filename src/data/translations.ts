@@ -70,7 +70,7 @@ export const translations: Record<'en' | 'fr', UIStrings> = {
     skillsEngines: "Engines & Audio",
     skillsLanguages: "Languages & Frameworks",
     skillsTools: "Tools & Methods",
-    timelineInternships: "Internship Experience",
+    timelineInternships: "Professional Experience",
     timelineEducation: "Education",
     timelineExtracurricular: "Extracurricular Involvement",
     copyright: "My Game Portfolio"
@@ -106,7 +106,7 @@ export const translations: Record<'en' | 'fr', UIStrings> = {
     skillsEngines: "Moteurs & Audio",
     skillsLanguages: "Langages & Frameworks",
     skillsTools: "Outils & Méthodes",
-    timelineInternships: "Expériences de Stage",
+    timelineInternships: "Expérience Professionnelle",
     timelineEducation: "Éducation & Formations",
     timelineExtracurricular: "Implication Extrascolaire",
     copyright: "Mon Portfolio de Jeux"

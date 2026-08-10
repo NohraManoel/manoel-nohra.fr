@@ -2,6 +2,9 @@
 // src/components/ResumeContent.astro
 import { translations } from "../data/translations";
 import { resumeData } from "../data/resume";
+import SkillCard from "./SkillCard.astro";
+import ExperienceCard from "./ExperienceCard.astro";
+import { Icon } from 'astro-icon/components';
 
 interface Props {
   lang: "en" | "fr";
@@ -13,103 +16,86 @@ const data = resumeData[lang];
 ---
 
 <div class="resume-container animate-fade-in">
-  <h1>{t.journeyTitle}</h1>
+  <h1 class="section-title"><Icon name="mdi:map-marker-path" class="title-icon" /> {t.journeyTitle}</h1>
 
-  <div class="skills-block">
-    <h2>{t.skillsTitle}</h2>
-    <ul>
-      {
-        data.skills.map((skill) => (
-          <li>
-            <strong>{skill.category}:</strong> {skill.items}
-          </li>
-        ))
-      }
-    </ul>
-  </div>
-
-  <div class="timeline-section">
-    <h2>{t.timelineInternships}</h2>
-    <div class="timeline">
-      {
-        data.internships.map((item) => (
-          <div class="timeline-item">
-            <span class="date">{item.date}</span>
-            <h3>{item.title}</h3>
-            <span class="location">{item.subtitle}</span>
-            {item.bullets && item.bullets.length > 0 && (
-              <ul>
-                {item.bullets.map((bullet) => (
-                  <li>{bullet}</li>
-                ))}
-              </ul>
-            )}
-          </div>
-        ))
-      }
+  <div class="section-container">
+    <h2 class="section-title"><Icon name="mdi:tools" class="title-icon" /> {t.skillsTitle}</h2>
+    <div class="carousel-wrapper">
+      <button class="carousel-btn prev" aria-label="Previous"><Icon name="mdi:chevron-left" /></button>
+      <div class="carousel-track skills-carousel">
+        {data.skills.map((skill) => {
+          const sortedItems = [...skill.items].sort((a, b) => a.name.localeCompare(b.name));
+          return (
+            <div class="carousel-slide skill-slide">
+              <SkillCard category={skill.category} skills={sortedItems} />
+            </div>
+          );
+        })}
+      </div>
+      <button class="carousel-btn next" aria-label="Next"><Icon name="mdi:chevron-right" /></button>
     </div>
   </div>
 
-  <div class="timeline-section">
-    <h2>{t.timelineEducation}</h2>
-    <div class="timeline">
-      {
-        data.education.map((item) => (
-          <div class="timeline-item">
-            <span class="date">{item.date}</span>
-            <h3>{item.title}</h3>
-            <span class="institution">{item.subtitle}</span>
-            {item.description && <p>{item.description}</p>}
+  <div class="section-container">
+    <h2 class="section-title"><Icon name="mdi:briefcase" class="title-icon" /> {t.timelineInternships}</h2>
+    <div class="carousel-wrapper">
+      <button class="carousel-btn prev" aria-label="Previous"><Icon name="mdi:chevron-left" /></button>
+      <div class="carousel-track experience-carousel">
+        {data.internships.map((item) => (
+          <div class="carousel-slide exp-slide">
+            <ExperienceCard {...item} />
           </div>
-        ))
-      }
+        ))}
+      </div>
+      <button class="carousel-btn next" aria-label="Next"><Icon name="mdi:chevron-right" /></button>
     </div>
   </div>
 
-  <div class="timeline-section">
-    <h2>{t.timelineExtracurricular}</h2>
-    <div class="timeline">
-      {
-        data.extracurriculars.map((item) => (
-          <div class="timeline-item">
-            <span class="date">{item.date}</span>
-            <h3>{item.title}</h3>
-            <span class="location">{item.subtitle}</span>
-            {item.bullets && item.bullets.length > 0 && (
-              <ul>
-                {item.bullets.map((bullet) => (
-                  <li>{bullet}</li>
-                ))}
-              </ul>
-            )}
+  <div class="section-container">
+    <h2 class="section-title"><Icon name="mdi:school" class="title-icon" /> {t.timelineEducation}</h2>
+    <div class="carousel-wrapper">
+      <button class="carousel-btn prev" aria-label="Previous"><Icon name="mdi:chevron-left" /></button>
+      <div class="carousel-track experience-carousel">
+        {data.education.map((item) => (
+          <div class="carousel-slide exp-slide">
+            <ExperienceCard {...item} />
           </div>
-        ))
-      }
+        ))}
+      </div>
+      <button class="carousel-btn next" aria-label="Next"><Icon name="mdi:chevron-right" /></button>
+    </div>
+  </div>
+
+  <div class="section-container">
+    <h2 class="section-title"><Icon name="mdi:gamepad-variant" class="title-icon" /> {t.timelineExtracurricular}</h2>
+    <div class="carousel-wrapper">
+      <button class="carousel-btn prev" aria-label="Previous"><Icon name="mdi:chevron-left" /></button>
+      <div class="carousel-track experience-carousel">
+        {data.extracurriculars.map((item) => (
+          <div class="carousel-slide exp-slide">
+            <ExperienceCard {...item} />
+          </div>
+        ))}
+      </div>
+      <button class="carousel-btn next" aria-label="Next"><Icon name="mdi:chevron-right" /></button>
     </div>
   </div>
 </div>
 
 <style>
   .resume-container {
-    max-width: 800px;
+    max-width: 1000px;
     margin: 0 auto;
     padding: 1rem 0;
   }
 
-  /* Fade-in Animation */
   .animate-fade-in {
     animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
 
   @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(15px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 
   h1 {
@@ -118,110 +104,139 @@ const data = resumeData[lang];
     color: #fff;
   }
 
+  .section-title {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .title-icon {
+    color: var(--accent-light, #60a5fa);
+  }
+
   h2 {
     font-size: 1.6rem;
-    color: var(--accent-light);
+    color: var(--accent-light, #60a5fa);
     margin-bottom: 1.5rem;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     padding-bottom: 0.5rem;
   }
 
-  .skills-block {
-    background-color: var(--bg-card);
-    padding: 1.5rem;
-    border-radius: 8px;
-    margin-bottom: 3rem;
-    border: 1px solid rgba(255, 255, 255, 0.05);
+  .section-container {
+    margin-bottom: 3.5rem;
   }
 
-  .skills-block ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  .skills-block li {
-    margin-bottom: 0.5rem;
-    line-height: 1.5;
-  }
-
-  .skills-block li strong {
-    color: #fff;
-  }
-
-  .timeline-section {
-    margin-bottom: 3rem;
-  }
-
-  .timeline {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-  }
-
-  .timeline-item {
-    border-left: 2px solid var(--accent);
-    padding-left: 1.5rem;
+  .carousel-wrapper {
     position: relative;
-    transition: transform 0.2s ease;
+    display: flex;
+    align-items: center;
   }
 
-  /* Hover effect for timeline items to make it premium */
-  .timeline-item:hover {
-    transform: translateX(4px);
+  .carousel-track {
+    display: flex;
+    gap: 1.5rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    padding: 1rem 0.5rem;
+    /* Hide scrollbar for aesthetics */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .carousel-track::-webkit-scrollbar {
+    display: none;
   }
 
-  .timeline-item::before {
-    content: "";
+  .carousel-slide {
+    scroll-snap-align: start;
+    height: 400px; /* fixed height for cards to look uniform */
+  }
+
+  .skill-slide {
+    flex: 0 0 280px;
+  }
+
+  .exp-slide {
+    flex: 0 0 320px;
+  }
+
+  .carousel-btn {
     position: absolute;
-    left: -6px;
-    top: 4px;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background-color: var(--bg-dark);
-    border: 2px solid var(--accent-light);
-    transition: background-color 0.2s ease;
-  }
-
-  .timeline-item:hover::before {
-    background-color: var(--accent-light);
-  }
-
-  .date {
-    font-size: 0.85rem;
-    color: var(--accent-light);
-    font-weight: 600;
-    display: block;
-  }
-
-  .timeline-item h3 {
-    margin: 0.25rem 0 0.1rem 0;
+    z-index: 10;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(10, 15, 29, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     color: #fff;
-    font-size: 1.25rem;
+    font-size: 2rem;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: background 0.2s, transform 0.2s;
   }
 
-  .location,
-  .institution {
-    font-size: 0.9rem;
-    color: var(--text-muted);
-    font-style: italic;
-    display: block;
-    margin-bottom: 0.75rem;
+  .carousel-btn:hover {
+    background: var(--accent, #3b82f6);
+    transform: translateY(-50%) scale(1.1);
   }
 
-  .timeline-item p {
-    color: var(--text-main);
-    line-height: 1.5;
-  }
-
-  .timeline-item ul {
-    padding-left: 1.2rem;
-    color: var(--text-main);
-    line-height: 1.5;
-  }
-
-  .timeline-item li {
-    margin-bottom: 0.25rem;
+  .prev { left: -50px; }
+  .next { right: -50px; }
+  
+  @media (max-width: 768px) {
+    .skill-slide, .exp-slide {
+      flex: 0 0 85vw;
+    }
+    .prev { left: 0; }
+    .next { right: 0; }
   }
 </style>
+
+<script>
+  // Simple script for carousel arrows
+  document.querySelectorAll('.carousel-wrapper').forEach((wrapper) => {
+    const track = wrapper.querySelector('.carousel-track') as HTMLElement;
+    const prevBtn = wrapper.querySelector('.prev') as HTMLElement;
+    const nextBtn = wrapper.querySelector('.next') as HTMLElement;
+    
+    if (track && prevBtn && nextBtn) {
+      const updateButtonsVisibility = () => {
+        if (track.scrollWidth <= track.clientWidth) {
+          prevBtn.style.display = 'none';
+          nextBtn.style.display = 'none';
+        } else {
+          prevBtn.style.display = 'flex';
+          nextBtn.style.display = 'flex';
+        }
+      };
+
+      // Initial check and observe resize
+      updateButtonsVisibility();
+      window.addEventListener('resize', updateButtonsVisibility);
+      // Wait for fonts/images to load just in case width changes
+      setTimeout(updateButtonsVisibility, 100);
+
+      prevBtn.addEventListener('click', () => {
+        if (track.scrollLeft <= 5) {
+          track.scrollTo({ left: track.scrollWidth, behavior: 'smooth' });
+        } else {
+          const scrollAmount = track.clientWidth * 0.8; 
+          track.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+        }
+      });
+
+      nextBtn.addEventListener('click', () => {
+        if (track.scrollLeft + track.clientWidth >= track.scrollWidth - 5) {
+          track.scrollTo({ left: 0, behavior: 'smooth' });
+        } else {
+          const scrollAmount = track.clientWidth * 0.8;
+          track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+        }
+      });
+    }
+  });
+</script>

@@ -1,7 +1,10 @@
+import type { Skill } from './resume';
+
 export interface Project {
   title: string;
   description: Record<'en' | 'fr', string | string[]>;
   tags: Record<'en' | 'fr', string[]>;
+  technologies: Skill[];
   media: string[];
   link: string;
 }
@@ -24,9 +27,15 @@ export const projects: Project[] = [
       ]
     },
     tags: {
-      en: ["Unity", "Co-op", "PC", "Ubisoft 2026"],
-      fr: ["Unity", "Co-op", "PC", "Ubisoft 2026"]
+      en: ["Co-op", "PC", "GameLab 2026", "Asymmetrical", "Physics"],
+      fr: ["Co-op", "PC", "Cubi 2026", "Asymétrique", "Physique"]
     },
+    technologies: [
+      { name: "Unity", icon: "skill-icons:unity-dark" },
+      { name: "C#", icon: "skill-icons:cs" },
+      { name: "2D Mathematics", icon: "mdi:math-compass" },
+      { name: "Git", icon: "skill-icons:git" }
+    ],
     media: [
       "https://youtu.be/0Q0UfIkH1_U?si=NZDiEOollDZ2e6AY",
       "/images/POCC/InGame.png"
@@ -40,9 +49,14 @@ export const projects: Project[] = [
       fr: "Un jeu de simulation de construction de ville développé sur Unity à des fins pédagogiques pour le département d'urbanisme du Cégep de Matane. J'ai agi en tant que programmeur pour reprendre le développement sur une base de code existante, les joueurs doivent agrandir une ville, gérer les contraintes de ressources et équilibrer les demandes croissantes d'une population en pleine expansion."
     },
     tags: {
-      en: ["Unity", "Simulation", "Internship", "2022"],
-      fr: ["Unity", "Simulation", "Stage", "2022"]
+      en: ["Simulation", "Internship", "2022", "City-Builder", "Management"],
+      fr: ["Simulation", "Stage", "2022", "Construction de ville", "Gestion"]
     },
+    technologies: [
+      { name: "Unity", icon: "skill-icons:unity-dark" },
+      { name: "C#", icon: "skill-icons:cs" },
+      { name: "Git", icon: "skill-icons:git" }
+    ],
     media: [
       "https://youtu.be/nk9_qUVzghE?si=rDdCwFjEgHM44uc4",
       "/images/Urbia/TitleScreen.png",
@@ -68,9 +82,14 @@ export const projects: Project[] = [
       ]
     },
     tags: {
-      en: ["Unity", "GameJam", "2023"],
-      fr: ["Unity", "GameJam", "2023"]
+      en: ["GameJam", "2023", "Procedural Generation", "Top-Down", "AI"],
+      fr: ["GameJam", "2023", "Génération Procédurale", "Vue de dessus", "IA"]
     },
+    technologies: [
+      { name: "Unity", icon: "skill-icons:unity-dark" },
+      { name: "C#", icon: "skill-icons:cs" },
+      { name: "Git", icon: "skill-icons:git" }
+    ],
     media: [
       "https://youtu.be/BIpkwAC2xWw?si=C1dIM_8RxTfAh0s6"
     ],
@@ -91,9 +110,15 @@ export const projects: Project[] = [
       ]
     },
     tags: {
-      en: ["Unreal Engine 5", "Tower Defense", "2025"],
-      fr: ["Unreal Engine 5", "Tower Defense", "2025"]
+      en: ["Tower Defense", "2025", "Strategy"],
+      fr: ["Tower Defense", "2025", "Stratégie"]
     },
+    technologies: [
+      { name: "Unreal Engine 5", icon: "skill-icons:unrealengine" },
+      { name: "C++", icon: "skill-icons:cpp" },
+      { name: "Blueprints", icon: "mdi:file-tree" },
+      { name: "3D Mathematics", icon: "mdi:math-compass" }
+    ],
     media: [
       "https://youtu.be/6oPt-Pxkykk"
     ],
@@ -106,9 +131,14 @@ export const projects: Project[] = [
       fr: "Un jeu de stratégie tactique en 2D au tour par tour se déroulant dans un donjon médiéval-fantastique. Dirigez un héros à travers les salles, gagnez de l'expérience, ouvrez des coffres et gérez vos points d'action pour vaincre le boss final. Développé en équipe de 6 personnes durant mon cursus universitaire en informatique."
     },
     tags: {
-      en: ["Unity", "2021"],
-      fr: ["Unity", "2021"]
+      en: ["Turn-based", "2021", "2D", "Tactical RPG"],
+      fr: ["Tour par tour", "2021", "2D", "RPG Tactique"]
     },
+    technologies: [
+      { name: "Unity", icon: "skill-icons:unity-dark" },
+      { name: "C#", icon: "skill-icons:cs" },
+      { name: "Git", icon: "skill-icons:git" }
+    ],
     media: [
       "https://www.youtube.com/watch?v=PtGLqUkL84o",
       "/images/Jaloux/TitleJaloux.png",
@@ -125,9 +155,14 @@ export const projects: Project[] = [
       fr: "Un jeu de tir à la première personne solo mettant en scène des mécaniques de mouvement dynamiques telles que le double saut, le grappin, la glissade et les tirs par ricochet. Chaque niveau restreint ou active des mécaniques spécifiques, forçant le joueur à s'adapter. Développé de manière autonome sous la supervision des professeurs lors de mon semestre d'échange à Matane."
     },
     tags: {
-      en: ["Unreal Engine 4", "FPS", "2023"],
-      fr: ["Unreal Engine 4", "FPS", "2023"]
+      en: ["FPS", "2023", "Movement Shooter", "Solo"],
+      fr: ["FPS", "2023", "Shooter de mouvement", "Solo"]
     },
+    technologies: [
+      { name: "Unreal Engine 4", icon: "skill-icons:unrealengine" },
+      { name: "C++", icon: "skill-icons:cpp" },
+      { name: "Blueprints", icon: "mdi:file-tree" }
+    ],
     media: [
       "https://youtu.be/r7Ow_lh_vSI?si=llbNVUJL-147jwR5",
       "/images/FPS/gameStart.png"

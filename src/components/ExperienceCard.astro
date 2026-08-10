@@ -1,0 +1,319 @@
+---
+import { Icon } from "astro-icon/components";
+
+interface Skill {
+  name: string;
+  icon: string;
+}
+
+interface Props {
+  date: string;
+  title: string;
+  subtitle: string;
+  bullets?: string[];
+  description?: string;
+  companyLogo?: string;
+  technologies?: Skill[];
+}
+
+const {
+  date,
+  title,
+  subtitle,
+  bullets,
+  description,
+  companyLogo,
+  technologies,
+} = Astro.props;
+---
+
+<div class="flip-card">
+  <div class="flip-card-inner">
+    <!-- FRONT -->
+    <div class="flip-card-front">
+      <div class="top-right-hint" title="Click to flip">
+        <Icon name="mdi:rotate-3d-variant" class="corner-icon" />
+      </div>
+      <div class="front-header">
+        {
+          companyLogo ? (
+            <img
+              src={companyLogo}
+              alt={`${subtitle} logo`}
+              class="company-logo"
+            />
+          ) : (
+            <div class="company-logo placeholder" />
+          )
+        }
+        <h3>{title}</h3>
+        <span class="subtitle">{subtitle}</span>
+        <span class="date">{date}</span>
+      </div>
+
+      {
+        technologies && technologies.length > 0 && (
+          <div class="front-tech">
+            <h4>Stack & Skills</h4>
+            <div class="tech-grid">
+              {technologies.map((tech) => (
+                <div class="tech-item" title={tech.name}>
+                  {tech.icon.includes('/') || tech.icon.includes('.') ? (
+                    <img src={tech.icon} alt={tech.name} class="tech-icon" />
+                  ) : (
+                    <Icon name={tech.icon} class="tech-icon" />
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        )
+      }
+    </div>
+
+    <!-- BACK -->
+    <div class="flip-card-back">
+      <div class="back-header">
+        <h3>{title}</h3>
+        <Icon name="mdi:close-circle-outline" class="close-icon" />
+      </div>
+      <div class="card-body">
+        {description && <p>{description}</p>}
+        {
+          bullets && bullets.length > 0 && (
+            <ul>
+              {bullets.map((bullet) => (
+                <li>{bullet}</li>
+              ))}
+            </ul>
+          )
+        }
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .flip-card {
+    background-color: transparent;
+    width: 100%;
+    height: 100%;
+    perspective: 1000px; /* 3D effect */
+    cursor: pointer;
+  }
+
+  .flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: left;
+    transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
+    transform-style: preserve-3d;
+  }
+
+  .flip-card.is-flipped .flip-card-inner {
+    transform: rotateY(180deg);
+  }
+
+  .flip-card-front,
+  .flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 12px;
+    background-color: var(--bg-card, #1e293b);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  /* FRONT STYLES */
+  .flip-card-front {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    text-align: center;
+  }
+
+  .front-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .company-logo {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    border-radius: 12px;
+    background-color: rgba(255, 255, 255, 0.05);
+    padding: 8px;
+    margin-bottom: 0.5rem;
+  }
+
+  .company-logo.placeholder {
+    background-color: rgba(59, 130, 246, 0.2);
+  }
+
+  .front-header h3 {
+    margin: 0;
+    font-size: 1.3rem;
+    color: #fff;
+    line-height: 1.2;
+  }
+
+  .front-header .subtitle {
+    color: var(--accent-light, #60a5fa);
+    font-weight: 600;
+    font-size: 1rem;
+  }
+
+  .front-header .date {
+    color: var(--text-muted, #94a3b8);
+    font-size: 0.85rem;
+    font-style: italic;
+  }
+
+  .front-tech {
+    width: 100%;
+    margin-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 1rem;
+  }
+
+  .front-tech h4 {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 0 0 0.8rem 0;
+  }
+
+  .tech-grid {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .tech-item {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 0.5rem;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .tech-icon {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .top-right-hint {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    color: var(--accent-light, #60a5fa);
+    opacity: 0.8;
+    animation: pulse 2s infinite;
+  }
+
+  .corner-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+      opacity: 0.8;
+    }
+    50% {
+      transform: scale(1.05);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 0.8;
+    }
+  }
+
+  /* BACK STYLES */
+  .flip-card-back {
+    transform: rotateY(180deg);
+    text-align: left;
+  }
+
+  .back-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .back-header h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    color: #fff;
+    line-height: 1.3;
+    text-align: center;
+    flex-grow: 1;
+    padding-left: 1.5rem;
+  }
+
+  .close-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    color: var(--text-muted);
+    flex-shrink: 0;
+  }
+
+  .card-body {
+    color: var(--text-main, #cbd5e1);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    flex-grow: 1;
+    overflow-y: auto;
+    padding-right: 0.5rem;
+  }
+
+  .card-body ul {
+    padding-left: 1.2rem;
+    margin: 0;
+  }
+
+  .card-body li {
+    margin-bottom: 0.5rem;
+  }
+
+  /* Scrollbar styling for back */
+  .card-body::-webkit-scrollbar {
+    width: 4px;
+  }
+  .card-body::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+  }
+  .card-body::-webkit-scrollbar-thumb {
+    background: var(--accent-light, #60a5fa);
+    border-radius: 4px;
+  }
+</style>
+
+<script>
+  // Add click listener to all flip cards
+  document.querySelectorAll(".flip-card").forEach((card) => {
+    card.addEventListener("click", () => {
+      card.classList.toggle("is-flipped");
+    });
+  });
+</script>
