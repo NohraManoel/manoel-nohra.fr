@@ -29,11 +29,12 @@ export const resumeData: Record<'en' | 'fr', ResumeData> = {
   en: {
     skills: [
       { category: "Game Engine", items: [{ name: "Unreal Engine", icon: "skill-icons:unrealengine" }, { name: "Unity", icon: "skill-icons:unity-dark" }, { name: "Unity VR", icon: "mdi:virtual-reality" }, { name: "Anvil", icon: "/images/Logo/Skills/Anvil_Logo.png" }] },
-      { category: "Object oriented language", items: [{ name: "C#", icon: "skill-icons:cs" }, { name: "C++", icon: "skill-icons:cpp" }, { name: "Python", icon: "skill-icons:python-dark" }, { name: "Java", icon: "skill-icons:java-dark" }, { name: "C", icon: "skill-icons:c" }] },
+      { category: "Programming Languages", items: [{ name: "C#", icon: "skill-icons:cs" }, { name: "C++", icon: "skill-icons:cpp" }, { name: "Python", icon: "skill-icons:python-dark" }, { name: "Java", icon: "skill-icons:java-dark" }, { name: "C", icon: "skill-icons:c" }, { name: "SQL", icon: "mdi:database-search" }] },
       { category: "Framework & APIs", items: [{ name: "WPF", icon: "/images/Logo/Skills/WPF_Logo.png" }, { name: "OpenGL", icon: "logos:opengl" }, { name: "UE C++", icon: "skill-icons:unrealengine" }, { name: "Unity C#", icon: "skill-icons:unity-dark" }] },
-      { category: "Software Engineering", items: [{ name: "Debugging", icon: "mdi:bug-check" }, { name: "Teamwork", icon: "mdi:account-group" }, { name: "Data structures", icon: "mdi:file-tree" }, { name: "Testing", icon: "mdi:test-tube" }, { name: "Version control", icon: "mdi:source-branch" }, { name: "Database", icon: "mdi:database" }, { name: "Agile & Scrum", icon: "mdi:sync-circle" }, { name: "Design Patterns", icon: "mdi:puzzle-outline" }, { name: "3D Mathematics", icon: "mdi:math-compass" }] },
+      { category: "Software Engineering", items: [{ name: "Debugging", icon: "mdi:bug-check" }, { name: "Teamwork", icon: "mdi:account-group" }, { name: "Data structures", icon: "mdi:file-tree" }, { name: "Testing", icon: "mdi:test-tube" }, { name: "Version control", icon: "mdi:source-branch" }, { name: "Database", icon: "mdi:database" }, { name: "Agile & Scrum", icon: "mdi:sync-circle" }, { name: "Design Patterns", icon: "mdi:puzzle-outline" }, { name: "3D Mathematics", icon: "mdi:math-compass" }, { name: "Problem Solving", icon: "mdi:head-lightbulb-outline" }] },
       { category: "Tools", items: [{ name: "Rider", icon: "skill-icons:rider-dark" }, { name: "Visual Studio", icon: "skill-icons:visualstudio-dark" }, { name: "VS Code", icon: "skill-icons:vscode-dark" }, { name: "AI", icon: "mdi:robot-outline" }, { name: "Office", icon: "mdi:microsoft-office" }, { name: "Git", icon: "skill-icons:git" }, { name: "Perforce", icon: "/images/Logo/Skills/Perforce_Logo.png" }, { name: "Jira", icon: "logos:jira" }, { name: "Confluence", icon: "logos:confluence" }, { name: "Trello", icon: "logos:trello" }, { name: "GitHub", icon: "skill-icons:github-dark" }, { name: "GitLab", icon: "skill-icons:gitlab-dark" }] },
       { category: "Web Dev", items: [{ name: "Astro", icon: "skill-icons:astro" }, { name: "JS", icon: "skill-icons:javascript" }, { name: "TS", icon: "skill-icons:typescript" }, { name: "Html", icon: "skill-icons:html" }, { name: "CSS", icon: "skill-icons:css" }] },
+      { category: "Databases", items: [{ name: "PostgreSQL", icon: "skill-icons:postgresql-dark" }, { name: "MySQL", icon: "skill-icons:mysql-dark" }] },
       { category: "Language", items: [{ name: "French", icon: "twemoji:flag-france" }, { name: "English", icon: "twemoji:flag-united-kingdom" }, { name: "Arabic", icon: "twemoji:flag-lebanon" }] }
     ],
     internships: [
@@ -46,7 +47,12 @@ export const resumeData: Record<'en' | 'fr', ResumeData> = {
           { name: "C++", icon: "skill-icons:cpp" },
           { name: "Perforce", icon: "/images/Logo/Skills/Perforce_Logo.png" },
           { name: "Debugging", icon: "mdi:bug-check" },
-          { name: "Jira", icon: "logos:jira" }
+          { name: "Jira", icon: "logos:jira" },
+          { name: "Anvil", icon: "/images/Logo/Skills/Anvil_Logo.png" },
+          { name: "Confluence", icon: "logos:confluence" },
+          { name: "Testing", icon: "mdi:test-tube" },
+          { name: "Agile & Scrum", icon: "mdi:sync-circle" },
+          { name: "English", icon: "twemoji:flag-united-kingdom" }
         ],
         bullets: [
           "Debugged and resolved complex C++ gameplay issues.",
@@ -65,7 +71,13 @@ export const resumeData: Record<'en' | 'fr', ResumeData> = {
           { name: "Unity", icon: "skill-icons:unity-dark" },
           { name: "C++", icon: "skill-icons:cpp" },
           { name: "C#", icon: "skill-icons:cs" },
-          { name: "Teamwork", icon: "mdi:account-group" }
+          { name: "Agile & Scrum", icon: "mdi:sync-circle" },
+          { name: "French", icon: "twemoji:flag-france" },
+          { name: "English", icon: "twemoji:flag-united-kingdom" },
+          { name: "Git", icon: "skill-icons:git" },
+          { name: "Visual Studio", icon: "skill-icons:visualstudio-dark" },
+          { name: "Debugging", icon: "mdi:bug-check" },
+          { name: "Testing", icon: "mdi:test-tube" }
         ],
         bullets: [
           "Developed a dynamic audio environment system for Unreal Engine 5.",
@@ -82,7 +94,15 @@ export const resumeData: Record<'en' | 'fr', ResumeData> = {
           { name: "C#", icon: "skill-icons:cs" },
           { name: "WPF", icon: "/images/Logo/Skills/WPF_Logo.png" },
           { name: "Perforce", icon: "/images/Logo/Skills/Perforce_Logo.png" },
-          { name: "Design Patterns", icon: "mdi:puzzle-outline" }
+          { name: "Git", icon: "skill-icons:git" },
+          { name: "English", icon: "twemoji:flag-united-kingdom" },
+          { name: "Anvil", icon: "/images/Logo/Skills/Anvil_Logo.png" },
+          { name: "Agile & Scrum", icon: "mdi:sync-circle" },
+          { name: "Debugging", icon: "mdi:bug-check" },
+          { name: "Visual Studio", icon: "skill-icons:visualstudio-dark" },
+          { name: "XAML", icon: "mdi:xml" },
+          { name: "Confluence", icon: "logos:confluence" },
+          { name: "Jira", icon: "logos:jira" }
         ],
         bullets: [
           "Developed 'Shortcut Explorer', a WPF/XAML tool for engine hotkeys.",
@@ -91,7 +111,7 @@ export const resumeData: Record<'en' | 'fr', ResumeData> = {
         ]
       },
       {
-        date: "2022 (10 weeks)",
+        date: "April 2022 - June 2022 (10 weeks)",
         title: "Programmer Intern",
         subtitle: "CDRIN - Matane, QC",
         companyLogo: "/images/Logo/Company/CDRIN_Logo.png",
@@ -99,7 +119,13 @@ export const resumeData: Record<'en' | 'fr', ResumeData> = {
           { name: "Unity", icon: "skill-icons:unity-dark" },
           { name: "C#", icon: "skill-icons:cs" },
           { name: "Agile & Scrum", icon: "mdi:sync-circle" },
-          { name: "Git", icon: "skill-icons:git" }
+          { name: "Git", icon: "skill-icons:git" },
+          { name: "GitHub", icon: "skill-icons:github-dark" },
+          { name: "Teamwork", icon: "mdi:account-group" },
+          { name: "Visual Studio", icon: "skill-icons:visualstudio-dark" },
+          { name: "French", icon: "twemoji:flag-france" },
+          { name: "Trello", icon: "logos:trello" },
+          { name: "Testing", icon: "mdi:test-tube" }
         ],
         bullets: [
           "Optimized an existing Unity codebase for client features.",
@@ -155,11 +181,12 @@ export const resumeData: Record<'en' | 'fr', ResumeData> = {
   fr: {
     skills: [
       { category: "Moteurs de jeu", items: [{ name: "Unreal Engine", icon: "skill-icons:unrealengine" }, { name: "Unity", icon: "skill-icons:unity-dark" }, { name: "Unity VR", icon: "mdi:virtual-reality" }, { name: "Anvil", icon: "/images/Logo/Skills/Anvil_Logo.png" }] },
-      { category: "Langages orientés objet", items: [{ name: "C#", icon: "skill-icons:cs" }, { name: "C++", icon: "skill-icons:cpp" }, { name: "Python", icon: "skill-icons:python-dark" }, { name: "Java", icon: "skill-icons:java-dark" }, { name: "C", icon: "skill-icons:c" }] },
+      { category: "Langages de programmation", items: [{ name: "C#", icon: "skill-icons:cs" }, { name: "C++", icon: "skill-icons:cpp" }, { name: "Python", icon: "skill-icons:python-dark" }, { name: "Java", icon: "skill-icons:java-dark" }, { name: "C", icon: "skill-icons:c" }, { name: "SQL", icon: "mdi:database-search" }] },
       { category: "Frameworks & APIs", items: [{ name: "WPF", icon: "/images/Logo/Skills/WPF_Logo.png" }, { name: "OpenGL", icon: "logos:opengl" }, { name: "UE C++", icon: "skill-icons:unrealengine" }, { name: "Unity C#", icon: "skill-icons:unity-dark" }] },
-      { category: "Génie logiciel", items: [{ name: "Débogage", icon: "mdi:bug-check" }, { name: "Travail d'équipe", icon: "mdi:account-group" }, { name: "Structures de données", icon: "mdi:file-tree" }, { name: "Tests", icon: "mdi:test-tube" }, { name: "Contrôle de version", icon: "mdi:source-branch" }, { name: "Bases de données", icon: "mdi:database" }, { name: "Agile & Scrum", icon: "mdi:sync-circle" }, { name: "Design Patterns", icon: "mdi:puzzle-outline" }, { name: "Mathématiques 3D", icon: "mdi:math-compass" }] },
+      { category: "Génie logiciel", items: [{ name: "Débogage", icon: "mdi:bug-check" }, { name: "Travail d'équipe", icon: "mdi:account-group" }, { name: "Structures de données", icon: "mdi:file-tree" }, { name: "Tests", icon: "mdi:test-tube" }, { name: "Contrôle de version", icon: "mdi:source-branch" }, { name: "Bases de données", icon: "mdi:database" }, { name: "Agile & Scrum", icon: "mdi:sync-circle" }, { name: "Design Patterns", icon: "mdi:puzzle-outline" }, { name: "Mathématiques 3D", icon: "mdi:math-compass" }, { name: "Résolution de problèmes", icon: "mdi:head-lightbulb-outline" }] },
       { category: "Outils", items: [{ name: "Rider", icon: "skill-icons:rider-dark" }, { name: "Visual Studio", icon: "skill-icons:visualstudio-dark" }, { name: "VS Code", icon: "skill-icons:vscode-dark" }, { name: "IA", icon: "mdi:robot-outline" }, { name: "Office", icon: "mdi:microsoft-office" }, { name: "Git", icon: "skill-icons:git" }, { name: "Perforce", icon: "/images/Logo/Skills/Perforce_Logo.png" }, { name: "Jira", icon: "logos:jira" }, { name: "Confluence", icon: "logos:confluence" }, { name: "Trello", icon: "logos:trello" }, { name: "GitHub", icon: "skill-icons:github-dark" }, { name: "GitLab", icon: "skill-icons:gitlab-dark" }] },
       { category: "Développement Web", items: [{ name: "Astro", icon: "skill-icons:astro" }, { name: "JS", icon: "skill-icons:javascript" }, { name: "TS", icon: "skill-icons:typescript" }, { name: "Html", icon: "skill-icons:html" }, { name: "CSS", icon: "skill-icons:css" }] },
+      { category: "Bases de données", items: [{ name: "PostgreSQL", icon: "skill-icons:postgresql-dark" }, { name: "MySQL", icon: "skill-icons:mysql-dark" }] },
       { category: "Langues", items: [{ name: "Français", icon: "twemoji:flag-france" }, { name: "Anglais", icon: "twemoji:flag-united-kingdom" }, { name: "Arabe", icon: "twemoji:flag-lebanon" }] }
     ],
     internships: [
@@ -172,7 +199,12 @@ export const resumeData: Record<'en' | 'fr', ResumeData> = {
           { name: "C++", icon: "skill-icons:cpp" },
           { name: "Perforce", icon: "/images/Logo/Skills/Perforce_Logo.png" },
           { name: "Débogage", icon: "mdi:bug-check" },
-          { name: "Jira", icon: "logos:jira" }
+          { name: "Jira", icon: "logos:jira" },
+          { name: "Anvil", icon: "/images/Logo/Skills/Anvil_Logo.png" },
+          { name: "Confluence", icon: "logos:confluence" },
+          { name: "Tests", icon: "mdi:test-tube" },
+          { name: "Agile & Scrum", icon: "mdi:sync-circle" },
+          { name: "Anglais", icon: "twemoji:flag-united-kingdom" }
         ],
         bullets: [
           "Débogage et résolution de problèmes de gameplay complexes en C++.",
@@ -191,7 +223,13 @@ export const resumeData: Record<'en' | 'fr', ResumeData> = {
           { name: "Unity", icon: "skill-icons:unity-dark" },
           { name: "C++", icon: "skill-icons:cpp" },
           { name: "C#", icon: "skill-icons:cs" },
-          { name: "Travail d'équipe", icon: "mdi:account-group" }
+          { name: "Agile & Scrum", icon: "mdi:sync-circle" },
+          { name: "Français", icon: "twemoji:flag-france" },
+          { name: "Anglais", icon: "twemoji:flag-united-kingdom" },
+          { name: "Git", icon: "skill-icons:git" },
+          { name: "Visual Studio", icon: "skill-icons:visualstudio-dark" },
+          { name: "Débogage", icon: "mdi:bug-check" },
+          { name: "Tests", icon: "mdi:test-tube" }
         ],
         bullets: [
           "Développement d'un système d'audio dynamique pour Unreal Engine 5.",
@@ -208,7 +246,15 @@ export const resumeData: Record<'en' | 'fr', ResumeData> = {
           { name: "C#", icon: "skill-icons:cs" },
           { name: "WPF", icon: "/images/Logo/Skills/WPF_Logo.png" },
           { name: "Perforce", icon: "/images/Logo/Skills/Perforce_Logo.png" },
-          { name: "Design Patterns", icon: "mdi:puzzle-outline" }
+          { name: "Git", icon: "skill-icons:git" },
+          { name: "Anglais", icon: "twemoji:flag-united-kingdom" },
+          { name: "Anvil", icon: "/images/Logo/Skills/Anvil_Logo.png" },
+          { name: "Agile & Scrum", icon: "mdi:sync-circle" },
+          { name: "Débogage", icon: "mdi:bug-check" },
+          { name: "Visual Studio", icon: "skill-icons:visualstudio-dark" },
+          { name: "XAML", icon: "mdi:xml" },
+          { name: "Confluence", icon: "logos:confluence" },
+          { name: "Jira", icon: "logos:jira" }
         ],
         bullets: [
           "Développement de 'Shortcut Explorer', un outil WPF/XAML pour les raccourcis.",
@@ -217,7 +263,7 @@ export const resumeData: Record<'en' | 'fr', ResumeData> = {
         ]
       },
       {
-        date: "2022 (Stage de 10 semaines)",
+        date: "Avril 2022 - Juin 2022 (Stage de 10 semaines)",
         title: "Stagiaire Programmeur",
         subtitle: "CDRIN - Matane, QC",
         companyLogo: "/images/Logo/Company/CDRIN_Logo.png",
@@ -225,7 +271,13 @@ export const resumeData: Record<'en' | 'fr', ResumeData> = {
           { name: "Unity", icon: "skill-icons:unity-dark" },
           { name: "C#", icon: "skill-icons:cs" },
           { name: "Agile & Scrum", icon: "mdi:sync-circle" },
-          { name: "Git", icon: "skill-icons:git" }
+          { name: "Git", icon: "skill-icons:git" },
+          { name: "GitHub", icon: "skill-icons:github-dark" },
+          { name: "Travail d'équipe", icon: "mdi:account-group" },
+          { name: "Visual Studio", icon: "skill-icons:visualstudio-dark" },
+          { name: "Français", icon: "twemoji:flag-france" },
+          { name: "Trello", icon: "logos:trello" },
+          { name: "Tests", icon: "mdi:test-tube" }
         ],
         bullets: [
           "Optimisation d'une base de code Unity pour les fonctionnalités client.",

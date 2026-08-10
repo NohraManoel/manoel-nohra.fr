@@ -28,70 +28,108 @@ const allTechs = Array.from(new Set(projects.flatMap(p => p.technologies.map(tec
     <p>{t.heroSubtitle}</p>
   </section>
 
-  <section class="about-section">
+  <section class="about-section" id="about">
     <h2>{t.aboutTitle}</h2>
     <p class="about-lead">{t.aboutLead}</p>
-    
+    <div class="center-title-wrapper">
+      <h3 class="bento-title highlight-gradient large-title">{t.aboutDetailsTitle}</h3>
+    </div>
+
     <div class="about-content">
       <div class="about-profile">
         <img src="/images/profile.jpg" alt="Manoël Nohra" class="profile-img" />
       </div>
       
       <div class="about-details">
-        <h3>{t.aboutDetailsTitle}</h3>
 
-        <ul class="details-list">
-          <li>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="details-icon" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-            <div><strong>{t.labelBirth}:</strong> {t.valBirth}</div>
-          </li>
-          <li>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="details-icon" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-            <div><strong>{t.labelAge}:</strong> {age} {lang === 'en' ? 'years old' : 'ans'}</div>
-          </li>
-          <li>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="details-icon" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
-            <div><strong>{t.labelWebsite}:</strong> <a href={`https://${t.valBirth}`} target="_blank" rel="noopener noreferrer">manoel-nohra.fr</a></div>
-          </li>
-          <li>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="details-icon" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5"></path></svg>
-            <div><strong>{t.labelDegree}:</strong> {t.valDegree}</div>
-          </li>
-          <li>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="details-icon" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-            <div>
-              <strong>{t.labelPhone}:</strong> 
-              <span>{t.valPhoneFR}</span><br>
-              <span class="phone-space">{t.valPhoneCA}</span>
+        <div class="bento-grid">
+          <div class="bento-item">
+            <div class="icon-circle">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="details-icon" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
             </div>
-          </li>
-          <li>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="details-icon" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-            <div><strong>{t.labelEmail}:</strong> <a href={`mailto:${t.valEmail}`}>{t.valEmail}</a></div>
-          </li>
-          <li>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="details-icon" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-            <div><strong>{t.labelCity}:</strong> {t.valCity}</div>
-          </li>
-        </ul>
+            <div class="bento-content">
+              <strong>{t.labelBirth}</strong>
+              <span>{t.valBirth}</span>
+            </div>
+          </div>
+          <div class="bento-item">
+            <div class="icon-circle">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="details-icon" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            </div>
+            <div class="bento-content">
+              <strong>{t.labelAge}</strong>
+              <span>{age} {lang === 'en' ? 'years old' : 'ans'}</span>
+            </div>
+          </div>
+          <div class="bento-item">
+            <div class="icon-circle">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="details-icon" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+            </div>
+            <div class="bento-content">
+              <strong>{t.labelCity}</strong>
+              <span>{t.valCity}</span>
+            </div>
+          </div>
+          <div class="bento-item">
+            <div class="icon-circle">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="details-icon" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+            </div>
+            <div class="bento-content">
+              <strong>{t.labelWebsite}</strong>
+              <a href={`https://${t.valBirth}`} target="_blank" rel="noopener noreferrer" class="text-link">manoel-nohra.fr</a>
+            </div>
+          </div>
+          <div class="bento-item bento-wide">
+            <div class="icon-circle">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="details-icon" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5"></path></svg>
+            </div>
+            <div class="bento-content">
+              <strong>{t.labelDegree}</strong>
+              <span>{t.valDegree}</span>
+            </div>
+          </div>
+          <div class="bento-item">
+            <div class="icon-circle">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="details-icon" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+            </div>
+            <div class="bento-content">
+              <strong>{t.labelPhone}</strong>
+              <div class="contact-links">
+                <a href={`tel:${t.valPhoneFR.replace(/\s+/g, '')}`}>{t.valPhoneFR}</a>
+                <a href={`tel:${t.valPhoneCA.replace(/\s+/g, '').replace(/-/g, '')}`}>{t.valPhoneCA}</a>
+              </div>
+            </div>
+          </div>
+          <div class="bento-item">
+            <div class="icon-circle">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="details-icon" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+            </div>
+            <div class="bento-content">
+              <strong>{t.labelEmail}</strong>
+              <a href={`mailto:${t.valEmail}`} class="text-link">{t.valEmail}</a>
+            </div>
+          </div>
 
-        <div class="favorite-games-container">
-          <h4>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="details-icon" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-            {t.favoriteGamesTitle}
-          </h4>
-          <div class="games-tags">
-            <span class="game-tag">Rocket League <small>(SSL)</small></span>
-            <span class="game-tag">Metaphor: ReFantazio</span>
-            <span class="game-tag">Final Fantasy X</span>
-            <span class="game-tag">Hollow Knight: Silksong</span>
+          <div class="bento-item bento-full bento-games">
+            <div class="icon-circle">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="details-icon" aria-hidden="true"><rect x="2" y="6" width="20" height="12" rx="2" ry="2"></rect><path d="M6 12h4M8 10v4M15 13h.01M18 11h.01"></path></svg>
+            </div>
+            <div class="bento-content">
+              <strong>{t.favoriteGamesTitle}</strong>
+              <div class="games-tags">
+                <span class="game-tag">Rocket League <small>(SSL)</small></span>
+                <span class="game-tag">Metaphor: ReFantazio</span>
+                <span class="game-tag">Final Fantasy X</span>
+                <span class="game-tag">Hollow Knight: Silksong</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="games-section">
+  <section class="games-section" id="games">
     <h2>{t.myGamesTitle}</h2>
     <ProjectFilter allTags={allTags} allTechs={allTechs} lang={lang} />
     <div class="games-grid">
@@ -185,12 +223,13 @@ const allTechs = Array.from(new Set(projects.flatMap(p => p.technologies.map(tec
   .about-content {
     display: flex;
     gap: 3rem;
-    align-items: flex-start;
+    align-items: center;
   }
 
   .about-profile {
     flex-shrink: 0;
     width: 300px;
+    align-self: center;
   }
 
   .profile-img {
@@ -206,44 +245,131 @@ const allTechs = Array.from(new Set(projects.flatMap(p => p.technologies.map(tec
   }
 
   .about-details h3 {
-    font-size: 1.5rem;
-    color: var(--accent-light, #60a5fa);
     margin-bottom: 1.5rem;
   }
 
-  .details-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.2rem 2rem;
+  .highlight-gradient {
+    font-size: 2.2rem !important;
+    font-weight: 800;
+    margin-bottom: 2rem !important;
+    background: linear-gradient(135deg, #fff 0%, #60a5fa 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
   }
 
-  .details-list li {
-    color: var(--text-main, #e2e8f0);
-    line-height: 1.4;
+  .center-title-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 2rem;
+    margin-bottom: 3rem;
+  }
+
+  .large-title {
+    font-size: 2.8rem !important;
+    margin-bottom: 0 !important;
+  }
+
+  /* Bento Grid */
+  .bento-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .bento-item {
+    background-color: rgba(30, 41, 59, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 1rem;
     display: flex;
     align-items: flex-start;
+    gap: 1rem;
+    transition: transform 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+  }
+
+  .bento-item:hover {
+    background-color: rgba(30, 41, 59, 0.8);
+    border-color: rgba(96, 165, 250, 0.3);
+    transform: translateY(-2px);
+  }
+
+  .bento-wide {
+    grid-column: 1 / -1;
+  }
+  
+  .bento-full {
+    grid-column: 1 / -1;
+    /* Uses default .bento-item flex layout */
+  }
+
+  .bento-full .bento-content {
+    flex-direction: column;
     gap: 0.8rem;
+  }
+
+  .icon-circle {
+    width: 36px;
+    height: 36px;
+    background-color: rgba(96, 165, 250, 0.15);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
   }
 
   .details-icon {
     width: 18px;
     height: 18px;
     color: var(--accent-light, #60a5fa);
-    flex-shrink: 0;
-    margin-top: 2px;
   }
 
-  .details-list strong {
+  .bento-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    color: var(--text-main, #e2e8f0);
+    font-size: 0.95rem;
+    line-height: 1.4;
+    width: 100%;
+  }
+
+  .bento-content strong {
+    color: #fff;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    opacity: 0.8;
+  }
+
+  .text-link {
+    color: var(--accent-light, #60a5fa);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .text-link:hover {
     color: #fff;
   }
 
-  .phone-space {
-    padding-left: 0;
-    display: inline-block;
-    margin-top: 0.2rem;
+  .contact-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .contact-links a {
+    color: var(--text-main, #e2e8f0);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .contact-links a:hover {
+    color: var(--accent-light, #60a5fa);
   }
 
   /* Grille réactive pour les GameCards */
@@ -263,7 +389,7 @@ const allTechs = Array.from(new Set(projects.flatMap(p => p.technologies.map(tec
     .about-profile {
       width: 250px;
     }
-    .details-list {
+    .bento-grid {
       grid-template-columns: 1fr;
       gap: 1rem;
     }
@@ -280,23 +406,13 @@ const allTechs = Array.from(new Set(projects.flatMap(p => p.technologies.map(tec
   }
 
   /* --- Section Jeux Favoris --- */
-  .favorite-games-container {
-    margin-top: 2rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
+  .bento-games {
+    /* Clear old margin/padding from old favorite-games-container if needed */
+    margin: 0;
   }
 
-  .favorite-games-container h4 {
-    font-size: 1.1rem;
-    color: #fff;
-    margin: 0 0 0.8rem 0;
-    display: flex;
-    align-items: center;
-    gap: 0.8rem;
-  }
-
-  .favorite-games-container h4 .details-icon {
-    margin-top: 0;
+  .bento-games strong {
+    /* Specific styles for games bento title if needed */
   }
 
   .games-tags {

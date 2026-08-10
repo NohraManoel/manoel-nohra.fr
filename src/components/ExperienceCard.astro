@@ -14,7 +14,10 @@ interface Props {
   description?: string;
   companyLogo?: string;
   technologies?: Skill[];
+  disableFlip?: boolean;
 }
+
+import { resumeData } from "../data/resume";
 
 const {
   date,
@@ -24,16 +27,48 @@ const {
   description,
   companyLogo,
   technologies,
+  disableFlip = false,
 } = Astro.props;
+
+let mainDate = date;
+let subDate = "";
+if (date.includes(" (")) {
+  const parts = date.split(" (");
+  mainDate = parts[0];
+  subDate = "(" + parts[1];
+}
+
+const lang = Astro.url.pathname.startsWith('/fr') ? 'fr' : 'en';
+const skillsCategories = resumeData[lang].skills;
+
+function getCategoryIndex(techName: string) {
+  for (let i = 0; i < skillsCategories.length; i++) {
+    if (skillsCategories[i].items.some((item) => item.name === techName)) {
+      return i;
+    }
+  }
+  return 999;
+}
+
+const sortedTechnologies = technologies ? [...technologies].sort((a, b) => {
+  const idxA = getCategoryIndex(a.name);
+  const idxB = getCategoryIndex(b.name);
+  if (idxA !== idxB) {
+    return idxA - idxB;
+  }
+  return a.name.localeCompare(b.name);
+}) : [];
 ---
 
-<div class="flip-card">
+<div class={`flip-card ${disableFlip ? 'no-flip' : ''}`}>
   <div class="flip-card-inner">
     <!-- FRONT -->
     <div class="flip-card-front">
-      <div class="top-right-hint" title="Click to flip">
-        <Icon name="mdi:rotate-3d-variant" class="corner-icon" />
-      </div>
+      {!disableFlip && (
+        <div class="top-right-hint" title="Click to flip">
+          <Icon name="mdi:rotate-3d-variant" class="corner-icon" />
+        </div>
+      )}
       <div class="front-header">
         {
           companyLogo ? (
@@ -48,21 +83,44 @@ const {
         }
         <h3>{title}</h3>
         <span class="subtitle">{subtitle}</span>
-        <span class="date">{date}</span>
+        <span class="date">
+          {mainDate}
+          {subDate && (
+            <>
+              <br />
+              {subDate}
+            </>
+          )}
+        </span>
       </div>
-
       {
-        technologies && technologies.length > 0 && (
+        disableFlip && (
+          <div class="card-body front-body">
+            {description && <p>{description}</p>}
+            {
+              bullets && bullets.length > 0 && (
+                <ul>
+                  {bullets.map((bullet) => (
+                    <li>{bullet}</li>
+                  ))}
+                </ul>
+              )
+            }
+          </div>
+        )
+      }
+      {
+        sortedTechnologies && sortedTechnologies.length > 0 && (
           <div class="front-tech">
-            <h4>Stack & Skills</h4>
-            <div class="tech-grid">
-              {technologies.map((tech) => (
-                <div class="tech-item" title={tech.name}>
+            <div class="technologies-container">
+              {sortedTechnologies.map((tech) => (
+                <div class="tech-badge" title={tech.name}>
                   {tech.icon.includes('/') || tech.icon.includes('.') ? (
-                    <img src={tech.icon} alt={tech.name} class="tech-icon" />
+                    <img src={tech.icon} alt={tech.name} class="tech-badge-icon" />
                   ) : (
-                    <Icon name={tech.icon} class="tech-icon" />
+                    <Icon name={tech.icon} class="tech-badge-icon" />
                   )}
+                  <span>{tech.name}</span>
                 </div>
               ))}
             </div>
@@ -71,7 +129,8 @@ const {
       }
     </div>
 
-    <!-- BACK -->
+    {!disableFlip && (
+      <!-- BACK -->
     <div class="flip-card-back">
       <div class="back-header">
         <h3>{title}</h3>
@@ -90,6 +149,7 @@ const {
         }
       </div>
     </div>
+    )}
   </div>
 </div>
 
@@ -100,6 +160,26 @@ const {
     height: 100%;
     perspective: 1000px; /* 3D effect */
     cursor: pointer;
+  }
+
+  .flip-card.no-flip {
+    cursor: default;
+  }
+
+  .flip-card.no-flip .flip-card-front {
+    position: relative;
+    height: 100%;
+  }
+
+  .flip-card.no-flip .flip-card-inner {
+    transform: none !important;
+  }
+
+  .front-body {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: center;
   }
 
   .flip-card-inner {
@@ -182,38 +262,33 @@ const {
 
   .front-tech {
     width: 100%;
-    margin-top: 1rem;
+    margin-top: 0.5rem;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
-    padding-top: 1rem;
+    padding-top: 0.8rem;
   }
 
-  .front-tech h4 {
-    color: var(--text-muted);
-    font-size: 0.8rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin: 0 0 0.8rem 0;
-  }
-
-  .tech-grid {
+  .technologies-container {
     display: flex;
-    justify-content: center;
-    gap: 1rem;
     flex-wrap: wrap;
+    gap: 0.4rem;
+    justify-content: center;
   }
 
-  .tech-item {
-    background: rgba(255, 255, 255, 0.05);
-    padding: 0.5rem;
-    border-radius: 8px;
+  .tech-badge {
     display: flex;
     align-items: center;
-    justify-content: center;
+    gap: 0.3rem;
+    background-color: rgba(255, 255, 255, 0.08);
+    color: #e2e8f0;
+    padding: 0.25rem 0.6rem;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 500;
   }
 
-  .tech-icon {
-    width: 2rem;
-    height: 2rem;
+  .tech-badge-icon {
+    width: 1rem;
+    height: 1rem;
   }
 
   .top-right-hint {

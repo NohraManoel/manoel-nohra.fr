@@ -210,6 +210,84 @@ const techsStr = sortedTechs.map(t => t.name.toLowerCase()).join(',');
         lightbox.classList.add('active');
       });
     });
+
+    // Drag to scroll logic for sub-media
+    document.querySelectorAll('.sub-media').forEach((track) => {
+      const isCarousel = track.classList.contains('is-carousel');
+      
+      let isDown = false;
+      let startX = 0;
+      let scrollLeft = 0;
+      let isDragging = false;
+      let scrollSpeed = 0.5; // pixels per frame for auto scroll
+      let exactScroll = track.scrollLeft;
+
+      // Ensure infinite loop logic
+      const loopScroll = () => {
+        if (!isCarousel) return;
+        const halfWidth = track.scrollWidth / 2;
+        if (track.scrollLeft >= halfWidth) {
+          track.scrollLeft -= halfWidth;
+          exactScroll -= halfWidth;
+        } else if (track.scrollLeft <= 0) {
+          track.scrollLeft += halfWidth;
+          exactScroll += halfWidth;
+        }
+      };
+
+      const autoScroll = () => {
+        if (!isDown && isCarousel) {
+          exactScroll += scrollSpeed;
+          track.scrollLeft = exactScroll;
+          loopScroll();
+        }
+        requestAnimationFrame(autoScroll);
+      };
+
+      if (isCarousel) {
+        autoScroll();
+      }
+
+      track.addEventListener('mousedown', (e) => {
+        isDown = true;
+        isDragging = false;
+        startX = (e as MouseEvent).pageX - (track as HTMLElement).offsetLeft;
+        scrollLeft = track.scrollLeft;
+        exactScroll = track.scrollLeft;
+      });
+
+      track.addEventListener('mouseleave', () => {
+        isDown = false;
+      });
+
+      track.addEventListener('mouseup', () => {
+        isDown = false;
+        setTimeout(() => {
+          isDragging = false;
+        }, 50);
+      });
+
+      track.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = (e as MouseEvent).pageX - (track as HTMLElement).offsetLeft;
+        const walk = (x - startX) * 2;
+        if (Math.abs(walk) > 5) {
+          isDragging = true;
+        }
+        track.scrollLeft = scrollLeft - walk;
+        exactScroll = track.scrollLeft;
+        loopScroll();
+      });
+
+      // Prevent lightbox click if we just dragged
+      track.addEventListener('click', (e) => {
+        if (isDragging) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+      }, true);
+    });
   });
 </script>
 
@@ -320,34 +398,32 @@ const techsStr = sortedTechs.map(t => t.name.toLowerCase()).join(',');
 
   .sub-media {
     width: 100%;
-    overflow: hidden;
+    overflow-x: auto;
     background: #000;
     container-type: inline-size;
+    cursor: grab;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .sub-media:active {
+    cursor: grabbing;
+  }
+
+  .sub-media::-webkit-scrollbar {
+    display: none;
   }
 
   .sub-media-track {
     display: flex;
     gap: 2px;
+    width: max-content;
   }
 
   .sub-media:not(.is-carousel) .sub-media-track {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
     width: 100%;
-  }
-
-  .is-carousel .sub-media-track {
-    width: max-content;
-    animation: scroll-carousel 20s linear infinite;
-  }
-
-  .is-carousel:hover .sub-media-track {
-    animation-play-state: paused;
-  }
-
-  @keyframes scroll-carousel {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(calc(-50% - 1px)); }
   }
 
   .sub-media-item {

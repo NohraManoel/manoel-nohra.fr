@@ -9,18 +9,45 @@ const currentPath = Astro.url.pathname;
 const switchLangLink = currentLang === 'en' 
   ? `/fr${currentPath}` 
   : currentPath.replace('/fr', '') || '/';
+
+const isHome = currentPath === '/' || currentPath === '/fr' || currentPath === '/fr/';
+const isResume = currentPath.includes('/parcours');
 ---
 
 <nav class="navbar">
   <div class="nav-container">
-    <a href={currentLang === 'en' ? '/' : '/fr'} class="logo">MN</a>
-    <div class="links">
-      <a href={currentLang === 'en' ? '/' : '/fr'}>
-        {currentLang === 'en' ? 'Home' : 'Accueil'}
-      </a>
-      <a href={currentLang === 'en' ? '/parcours' : '/fr/parcours'}>
-        {currentLang === 'en' ? 'Resume' : 'Parcours'}
-      </a>
+    <div class="nav-left">
+      <a href={isHome ? '#' : (currentLang === 'en' ? '/' : '/fr')} class="logo">MN</a>
+      <div class="main-links">
+        <a href={isHome ? '#' : (currentLang === 'en' ? '/' : '/fr')} class={isHome ? 'active-page' : ''}>
+          {currentLang === 'en' ? 'Home' : 'Accueil'}
+        </a>
+        <a href={isResume ? '#' : (currentLang === 'en' ? '/parcours' : '/fr/parcours')} class={isResume ? 'active-page' : ''}>
+          {currentLang === 'en' ? 'Resume' : 'Parcours'}
+        </a>
+      </div>
+    </div>
+
+    <div class="nav-right">
+
+      {(isHome || isResume) && (
+        <div class="sub-links">
+          {isHome && (
+            <>
+              <a href="#about" class="section-link">{currentLang === 'en' ? 'About Me' : 'À Propos'}</a>
+              <a href="#games" class="section-link">{currentLang === 'en' ? 'My Games' : 'Mes Jeux'}</a>
+            </>
+          )}
+          {isResume && (
+            <>
+              <a href="#skills" class="section-link">{currentLang === 'en' ? 'Skills' : 'Compétences'}</a>
+              <a href="#experience" class="section-link">{currentLang === 'en' ? 'Experience' : 'Expériences'}</a>
+              <a href="#education" class="section-link">{currentLang === 'en' ? 'Education' : 'Formations'}</a>
+              <a href="#extracurricular" class="section-link">{currentLang === 'en' ? 'Extras' : 'Extras'}</a>
+            </>
+          )}
+        </div>
+      )}
       <a 
         href={switchLangLink} 
         class="lang-switch" 
@@ -31,6 +58,33 @@ const switchLangLink = currentLang === 'en'
     </div>
   </div>
 </nav>
+
+<script>
+  const setupObserver = () => {
+    const sections = document.querySelectorAll("section[id], .section-container[id]");
+    const navLinks = document.querySelectorAll(".section-link");
+
+    if (sections.length === 0) return;
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          navLinks.forEach((link) => link.classList.remove("active"));
+          const activeLink = document.querySelector(`.section-link[href="#${entry.target.id}"]`);
+          if (activeLink) activeLink.classList.add("active");
+        }
+      });
+    }, {
+      rootMargin: "-100px 0px -40% 0px"
+    });
+
+    sections.forEach((section) => observer.observe(section));
+  };
+
+  setupObserver();
+  document.addEventListener('astro:after-swap', setupObserver);
+  document.addEventListener('astro:page-load', setupObserver);
+</script>
 
 <style>
   .navbar {
@@ -55,21 +109,59 @@ const switchLangLink = currentLang === 'en'
     font-weight: 800;
     font-size: 1.2rem;
     color: #fff;
+    text-decoration: none;
   }
 
-  .links {
+  .nav-left, .nav-right {
     display: flex;
     align-items: center;
   }
 
-  .links a {
+  .main-links {
+    display: flex;
+    align-items: center;
+  }
+
+  .main-links a {
     margin-left: 1.5rem;
     font-weight: 600;
     color: var(--text-main);
+    text-decoration: none;
+    transition: color 0.2s;
   }
 
-  .links a:hover {
+  .main-links a:hover, .main-links a.active-page {
     color: var(--accent);
+  }
+
+  .sub-links {
+    display: flex;
+    align-items: center;
+    border-right: 1px solid rgba(255, 255, 255, 0.2);
+    padding-right: 1.2rem;
+    margin-right: 1.2rem;
+  }
+
+  .sub-links a {
+    margin-left: 1rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s, transform 0.2s;
+  }
+
+  .sub-links a:first-child {
+    margin-left: 0;
+  }
+
+  .sub-links a:hover {
+    color: var(--text-main);
+  }
+
+  .sub-links a.active {
+    color: var(--accent-light);
+    transform: scale(1.05);
   }
 
   .lang-switch {
