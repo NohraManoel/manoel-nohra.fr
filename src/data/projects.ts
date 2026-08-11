@@ -7,9 +7,48 @@ export interface Project {
   technologies: Skill[];
   media: string[];
   link: string;
+  date?: string;
+  featured?: boolean;
 }
 
-export const projects: Project[] = [
+const projectsData: Project[] = [
+  {
+    title: "Echoes of Decay",
+    description: {
+      en: [
+        "A 3rd person game developed in Unreal Engine 5 for the LOG725 university course.",
+        "Developed in 8 weeks by a team of 3 programmers starting in February 2025, marking our first experience with the engine.",
+        "The theme was \"Mother Nature\" (Mère nature) where the player gathers abandoned items to craft powerful weapons.",
+        "The main goal is to purify the city from pollution and the creatures created by it.",
+        "Programmed the inventory system, enemy AI and animations, crafting system, and weapon system."
+      ],
+      fr: [
+        "Un jeu à la 3ème personne développé sous Unreal Engine 5 pour le cours universitaire LOG725.",
+        "Développé en 8 semaines par une équipe de 3 programmeurs à partir de février 2025, marquant notre première expérience avec le moteur.",
+        "Le thème était \"Mère nature\" : le joueur récupère des objets abandonnés pour créer des armes puissantes.",
+        "L'objectif principal est de purifier la ville de la pollution et des créatures qu'elle a engendrées.",
+        "Programmation du système d'inventaire, de l'IA et des animations ennemies, ainsi que des systèmes de craft et d'armes."
+      ]
+    },
+    tags: {
+      en: ["3rd Person", "Action", "University Project", "2025", "LOG725"],
+      fr: ["3ème Personne", "Action", "Projet Universitaire", "2025", "LOG725"]
+    },
+    technologies: [
+      { name: "Unreal Engine 5", icon: "skill-icons:unrealengine" },
+      { name: "Blueprints", icon: "mdi:file-tree" }
+    ],
+    media: [
+      "https://youtu.be/KRVpX3zIQgg",
+      "/images/EOD/TitleScreen.png",
+      "/images/EOD/GameStart.png",
+      "/images/EOD/InventoryCraft.png",
+      "/images/EOD/Craft.png",
+      "/images/EOD/GameOver.png"
+    ],
+    link: "https://github.com/MohETS/Echoes_of_Decay",
+    date: "2025-02"
+  },
   {
     title: "Panic On Comic City !",
     description: {
@@ -38,9 +77,17 @@ export const projects: Project[] = [
     ],
     media: [
       "https://youtu.be/0Q0UfIkH1_U?si=NZDiEOollDZ2e6AY",
-      "/images/POCC/InGame.png"
+      "https://youtu.be/5Fc6L_ePNwg",
+      "/images/POCC/InGame.png",
+      "/images/POCC/MainMenu.png",
+      "/images/POCC/CharacterSelelection.png",
+      "/images/POCC/NameSelection.png",
+      "/images/POCC/Leaderboard.png",
+      "/images/POCC/Credits.png"
     ],
-    link: "https://manoelnohra.itch.io/panic-on-comic-city"
+    link: "https://manoelnohra.itch.io/panic-on-comic-city",
+    date: "2026-05",
+    featured: true
   },
   {
     title: "Urbia",
@@ -63,7 +110,8 @@ export const projects: Project[] = [
       "/images/Urbia/InGame.png",
       "/images/Urbia/InGameAdvanced.png"
     ],
-    link: "https://dev.timmatane.ca/urbia"
+    link: "https://dev.timmatane.ca/urbia",
+    date: "2022-09"
   },
   {
     title: "The Plague",
@@ -93,7 +141,8 @@ export const projects: Project[] = [
     media: [
       "https://youtu.be/BIpkwAC2xWw?si=C1dIM_8RxTfAh0s6"
     ],
-    link: "https://manoelnohra.itch.io/the-plague"
+    link: "https://manoelnohra.itch.io/the-plague",
+    date: "2023-01"
   },
   {
     title: "Tower Defense Prototype",
@@ -122,7 +171,8 @@ export const projects: Project[] = [
     media: [
       "https://youtu.be/6oPt-Pxkykk"
     ],
-    link: "https://github.com/NohraManoel/TD"
+    link: "https://github.com/NohraManoel/TD",
+    date: "ongoing"
   },
   {
     title: "The Legend of Jaloux",
@@ -146,7 +196,8 @@ export const projects: Project[] = [
       "/images/Jaloux/MenuJaloux.png",
       "/images/Jaloux/JeuJaloux.png"
     ],
-    link: "https://github.com/Chopv1/The-legend-of-Jaloux"
+    link: "https://github.com/Chopv1/The-legend-of-Jaloux",
+    date: "2021-01"
   },
   {
     title: "Specialized FPS Project",
@@ -167,6 +218,20 @@ export const projects: Project[] = [
       "https://youtu.be/r7Ow_lh_vSI?si=llbNVUJL-147jwR5",
       "/images/FPS/gameStart.png"
     ],
-    link: "https://github.com/cegepmatane/projet-specialise-2022-ManoelNohra"
+    link: "https://github.com/cegepmatane/projet-specialise-2022-ManoelNohra",
+    date: "2022-01"
   }
 ];
+
+export const projects = projectsData.sort((a, b) => {
+  if (a.featured && !b.featured) return -1;
+  if (!a.featured && b.featured) return 1;
+  
+  if (a.date === "ongoing" && b.date !== "ongoing") return -1;
+  if (a.date !== "ongoing" && b.date === "ongoing") return 1;
+  if (a.date === "ongoing" && b.date === "ongoing") return 0;
+  
+  const dateA = a.date ? new Date(a.date).getTime() : 0;
+  const dateB = b.date ? new Date(b.date).getTime() : 0;
+  return dateB - dateA;
+});

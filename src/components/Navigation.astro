@@ -88,12 +88,15 @@ const isResume = currentPath.includes('/parcours');
 
 <style>
   .navbar {
-    background-color: rgba(10, 15, 29, 0.8);
-    backdrop-filter: blur(8px);
-    border-bottom: 1px solid var(--bg-card);
+    background-color: rgba(7, 11, 20, 0.75);
+    backdrop-filter: blur(12px) saturate(180%);
+    -webkit-backdrop-filter: blur(12px) saturate(180%);
+    border-bottom: 1px solid var(--border-light);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
     position: sticky;
     top: 0;
     z-index: 100;
+    transition: all 0.3s ease;
   }
 
   .nav-container {
@@ -128,10 +131,28 @@ const isResume = currentPath.includes('/parcours');
     color: var(--text-main);
     text-decoration: none;
     transition: color 0.2s;
+    position: relative;
+    padding-bottom: 4px;
+  }
+
+  .main-links a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--accent);
+    transition: width 0.3s ease;
+    border-radius: 2px;
+  }
+
+  .main-links a:hover::after, .main-links a.active-page::after {
+    width: 100%;
   }
 
   .main-links a:hover, .main-links a.active-page {
-    color: var(--accent);
+    color: var(--accent-light);
   }
 
   .sub-links {
@@ -156,19 +177,29 @@ const isResume = currentPath.includes('/parcours');
   }
 
   .sub-links a:hover {
-    color: var(--text-main);
+    color: var(--accent-light);
   }
 
   .sub-links a.active {
     color: var(--accent-light);
     transform: scale(1.05);
+    text-shadow: 0 0 10px var(--accent-glow);
   }
 
   .lang-switch {
     background-color: var(--bg-card);
     padding: 0.4rem 0.8rem;
-    border-radius: 4px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    border: 1px solid var(--border-light);
     font-size: 0.9rem;
+    transition: all 0.2s ease;
+    cursor: pointer;
+  }
+
+  .lang-switch:hover {
+    background-color: var(--bg-card-hover);
+    border-color: var(--border-glow);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
   }
 </style>
