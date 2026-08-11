@@ -19,7 +19,7 @@ function getYoutubeEmbedUrl(url: string) {
     const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
     const match = url.match(regExp);
     if (match && match[2].length === 11) {
-      return `https://www.youtube.com/embed/${match[2]}?rel=0&modestbranding=1`;
+      return `https://www.youtube.com/embed/${match[2]}?rel=0&modestbranding=1&enablejsapi=1`;
     }
   }
   return null;
@@ -69,9 +69,10 @@ const techsStr = sortedTechs.map(t => t.name.toLowerCase()).join(',');
         )}
       </div>
       {subMedia.length > 0 && (
-        <div class={`sub-media ${subMedia.length > 3 ? 'is-carousel' : ''}`}>
-          <div class="sub-media-track">
-            {subMedia.map((item) => (
+        <div class="sub-media-wrapper">
+          <div class={`sub-media ${subMedia.length > 3 ? 'is-carousel' : ''}`}>
+            <div class="sub-media-track">
+              {subMedia.map((item) => (
               <div class="sub-media-item">
                 {getYoutubeEmbedUrl(item) && (
                   <iframe 
@@ -113,6 +114,17 @@ const techsStr = sortedTechs.map(t => t.name.toLowerCase()).join(',');
             ))}
           </div>
         </div>
+        {subMedia.length > 3 && (
+          <>
+            <button class="carousel-btn prev-btn" aria-label="Previous image">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            </button>
+            <button class="carousel-btn next-btn" aria-label="Next image">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
+          </>
+        )}
+      </div>
       )}
     </div>
   ) : (
@@ -222,6 +234,35 @@ const techsStr = sortedTechs.map(t => t.name.toLowerCase()).join(',');
       let scrollSpeed = 0.5; // pixels per frame for auto scroll
       let exactScroll = track.scrollLeft;
 
+      let isHovered = false;
+      const wrapper = track.closest('.sub-media-wrapper');
+      
+      if (wrapper) {
+        wrapper.addEventListener('mouseenter', () => isHovered = true);
+        wrapper.addEventListener('mouseleave', () => isHovered = false);
+        
+        const prevBtn = wrapper.querySelector('.prev-btn');
+        const nextBtn = wrapper.querySelector('.next-btn');
+        
+        if (prevBtn) {
+          prevBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const itemWidth = track.clientWidth / 3;
+            track.scrollBy({ left: -itemWidth, behavior: 'smooth' });
+            setTimeout(() => { exactScroll = track.scrollLeft; loopScroll(); }, 350);
+          });
+        }
+        
+        if (nextBtn) {
+          nextBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const itemWidth = track.clientWidth / 3;
+            track.scrollBy({ left: itemWidth, behavior: 'smooth' });
+            setTimeout(() => { exactScroll = track.scrollLeft; loopScroll(); }, 350);
+          });
+        }
+      }
+
       // Ensure infinite loop logic
       const loopScroll = () => {
         if (!isCarousel) return;
@@ -236,7 +277,7 @@ const techsStr = sortedTechs.map(t => t.name.toLowerCase()).join(',');
       };
 
       const autoScroll = () => {
-        if (!isDown && isCarousel) {
+        if (!isDown && isCarousel && !isHovered) {
           exactScroll += scrollSpeed;
           track.scrollLeft = exactScroll;
           loopScroll();
@@ -287,6 +328,26 @@ const techsStr = sortedTechs.map(t => t.name.toLowerCase()).join(',');
           e.stopPropagation();
         }
       }, true);
+
+      // Intersection Observer to pause out-of-view videos
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) {
+            const video = entry.target.querySelector('video');
+            if (video) video.pause();
+            
+            const iframe = entry.target.querySelector('iframe');
+            if (iframe && iframe.contentWindow) {
+              iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+            }
+          }
+        });
+      }, {
+        root: track,
+        threshold: 0.1
+      });
+      
+      track.querySelectorAll('.sub-media-item').forEach(item => observer.observe(item));
     });
   });
 </script>
@@ -363,9 +424,9 @@ const techsStr = sortedTechs.map(t => t.name.toLowerCase()).join(',');
 
   .game-card {
     background-color: var(--bg-card, #1e293b);
-    border-radius: 12px;
+    border-radius: 16px;
     overflow: hidden;
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-light);
     display: flex;
     flex-direction: column;
     transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), 
@@ -375,9 +436,9 @@ const techsStr = sortedTechs.map(t => t.name.toLowerCase()).join(',');
   }
 
   .game-card:hover {
-    transform: translateY(-6px);
-    border-color: var(--accent-light, #60a5fa);
-    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3);
+    transform: translateY(-8px);
+    border-color: var(--border-glow);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(59, 130, 246, 0.15);
   }
 
   /* Gallery Layout */
@@ -395,6 +456,48 @@ const techsStr = sortedTechs.map(t => t.name.toLowerCase()).join(',');
     position: relative;
     overflow: hidden;
   }
+
+  .sub-media-wrapper {
+    position: relative;
+    width: 100%;
+  }
+
+  .carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(15, 23, 42, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #fff;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    backdrop-filter: blur(4px);
+    transition: all 0.2s ease;
+    opacity: 0;
+  }
+  
+  .sub-media-wrapper:hover .carousel-btn {
+    opacity: 1;
+  }
+  
+  .carousel-btn:hover {
+    background: rgba(59, 130, 246, 0.8);
+    border-color: rgba(96, 165, 250, 0.5);
+  }
+  
+  .carousel-btn svg {
+    width: 18px;
+    height: 18px;
+  }
+  
+  .prev-btn { left: 4px; }
+  .next-btn { right: 4px; }
 
   .sub-media {
     width: 100%;
@@ -494,14 +597,21 @@ const techsStr = sortedTechs.map(t => t.name.toLowerCase()).join(',');
   }
 
   .badge {
-    background-color: rgba(255, 255, 255, 0.1);
-    color: #cbd5e1;
-    padding: 0.2rem 0.6rem;
-    border-radius: 4px;
+    background-color: rgba(96, 165, 250, 0.1);
+    border: 1px solid rgba(96, 165, 250, 0.2);
+    color: var(--accent-light, #60a5fa);
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
     font-size: 0.75rem;
     font-weight: 600;
     letter-spacing: 0.5px;
     text-transform: uppercase;
+    transition: all 0.2s ease;
+  }
+  
+  .game-card:hover .badge {
+    border-color: rgba(96, 165, 250, 0.4);
+    box-shadow: 0 0 10px rgba(96, 165, 250, 0.1);
   }
 
   .technologies-container {
@@ -518,18 +628,21 @@ const techsStr = sortedTechs.map(t => t.name.toLowerCase()).join(',');
     display: flex;
     align-items: center;
     gap: 0.4rem;
-    background-color: rgba(59, 130, 246, 0.15);
-    color: var(--accent-light, #60a5fa);
-    padding: 0.35rem 0.7rem;
-    border-radius: 6px;
+    background-color: rgba(59, 130, 246, 0.1);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    color: var(--text-main);
+    padding: 0.35rem 0.8rem;
+    border-radius: 20px;
     font-size: 0.85rem;
     font-weight: 500;
-    transition: background-color 0.2s ease, transform 0.2s ease;
+    transition: all 0.2s ease;
   }
   
   .tech-badge:hover {
     background-color: rgba(59, 130, 246, 0.25);
+    border-color: var(--accent-light, #60a5fa);
     transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
   }
 
   .tech-icon {
@@ -570,20 +683,23 @@ const techsStr = sortedTechs.map(t => t.name.toLowerCase()).join(',');
   
   .btn {
     margin-top: 0.5rem;
-    background-color: var(--accent, #3b82f6);
+    background: linear-gradient(135deg, var(--accent, #3b82f6) 0%, #2563eb 100%);
     color: #fff;
-    padding: 0.7rem 1rem;
+    padding: 0.8rem 1rem;
     text-align: center;
-    border-radius: 6px;
+    border-radius: 8px;
     font-weight: 600;
-    transition: background-color 0.2s ease, transform 0.1s ease;
+    transition: all 0.2s ease;
+    border: 1px solid rgba(255,255,255,0.1);
   }
 
   .btn:hover { 
-    background-color: var(--accent-light, #60a5fa); 
+    background: linear-gradient(135deg, var(--accent-light, #60a5fa) 0%, var(--accent, #3b82f6) 100%); 
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+    transform: translateY(-2px);
   }
   
   .btn:active {
-    transform: scale(0.98);
+    transform: translateY(0) scale(0.98);
   }
 </style>
