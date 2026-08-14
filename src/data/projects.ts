@@ -55,13 +55,13 @@ const projectsData: Project[] = [
       en: [
         "🏆 Won Best Accessibility Award & Nominated for Best Design and Best Technical Innovation at the Ubisoft Gamelab 2026. An asymmetrical co-op game with an 80s-90s theme, developed over 10 weeks.",
         "Collaborated closely with artists and game designers under strict deadlines.",
-        "Applied 3D mathematics to calculate custom physics for a player (the roller) sliding along a dynamically moving and deforming mesh (the snake).",
+        "Applied 2D mathematics to calculate custom physics for a player (the roller) sliding along a dynamically moving and deforming mesh (the snake).",
         "Developed the core gameplay architecture inspired by Curve Rush mechanics."
       ],
       fr: [
         "🏆 Prix de la Meilleure Accessibilité & Nommé pour le Meilleur Design et la Meilleure Innovation Technique au Concours Universitaire Ubisoft 2026. Un jeu de coopération asymétrique sur le thème des années 80-90, développé en 10 semaines.",
         "Collaboration étroite avec des artistes et game designers sous des délais serrés.",
-        "Application des mathématiques 3D pour calculer la physique personnalisée d'un joueur (le roller) glissant le long d'un maillage en mouvement et en déformation dynamique (le serpent).",
+        "Application des mathématiques 2D pour calculer la physique personnalisée d'un joueur (le roller) glissant le long d'un maillage en mouvement et en déformation dynamique (le serpent).",
         "Développement de l'architecture de gameplay principale inspirée des mécaniques de Curve Rush."
       ]
     },
