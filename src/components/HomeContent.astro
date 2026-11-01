@@ -259,6 +259,8 @@ const allTechs = Array.from(new Set(projects.flatMap(p => p.technologies.map(tec
   /* Section About Me */
   .about-lead {
     max-width: 800px;
+    text-align: justify;
+    hyphens: auto;
     color: var(--text-main, #e2e8f0);
     line-height: 1.6;
     margin-bottom: 2rem;
@@ -454,6 +456,10 @@ const allTechs = Array.from(new Set(projects.flatMap(p => p.technologies.map(tec
 
   /* Ajustements pour tablettes et mobiles */
   @media (max-width: 768px) {
+    /* Narrow lines + justify = big word gaps */
+    .about-lead {
+      text-align: left;
+    }
     .about-content {
       flex-direction: column;
       align-items: center;
