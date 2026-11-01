@@ -172,6 +172,14 @@ const sortedTechnologies = technologies ? [...technologies].sort((a, b) => {
     border-top: 1px solid rgba(255, 255, 255, 0.1);
   }
 
+  /* Context line above bullets (team, tech, setup), as in the CV */
+  .card-body p:has(+ ul) {
+    color: var(--text-muted, #94a3b8);
+    font-style: italic;
+    font-size: 0.85rem;
+    margin-bottom: 0.6rem;
+  }
+
   .card-body ul {
     padding-left: 1.2rem;
   }

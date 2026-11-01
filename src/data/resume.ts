@@ -40,7 +40,7 @@ export const resumeData: Record<'en' | 'fr', ResumeData> = {
     internships: [
       {
         date: "May 2025 - August 2025 (17 weeks)",
-        title: "Gameplay Programmer Intern",
+        title: "Gameplay Programmer Intern (NEO Project)",
         subtitle: "Ubisoft Montreal - Montreal, QC",
         companyLogo: "/images/Logo/Company/Logo_UBI_MTL.png",
         technologies: [
@@ -54,16 +54,16 @@ export const resumeData: Record<'en' | 'fr', ResumeData> = {
           { name: "Agile & Scrum", icon: "mdi:sync-circle" },
           { name: "English", icon: "twemoji:flag-united-kingdom" }
         ],
+        description: "Fighting Team of 8 | C++, Anvil engine | Agile, tasks from lead, peer-reviewed",
         bullets: [
-          "Debugged and resolved complex C++ gameplay issues.",
-          "Enhanced combat targeting with line-of-sight checks.",
-          "Built a data-tracking system for enemy balancing.",
-          "Developed new tools to streamline designer workflows."
+          "Extended existing combat telemetry to send in-game events to data analysts for enemy and ability balancing.",
+          "Built and adapted gameplay features for designers, e.g. a fog ability that grows with an equipped outfit.",
+          "Debugged and fixed gameplay issues across health, input, animation, and targeting (line-of-sight)."
         ]
       },
       {
-        date: "September 2024 - December 2024 (15 weeks)",
-        title: "Software Engineer Intern",
+        date: "September 2024 - December 2024 (16 weeks)",
+        title: "Software Engineering Intern (Wwise Integration Team)",
         subtitle: "Audiokinetic - Montreal, QC",
         companyLogo: "/images/Logo/Company/Audiokinetic_Logo.png",
         technologies: [
@@ -79,10 +79,10 @@ export const resumeData: Record<'en' | 'fr', ResumeData> = {
           { name: "Debugging", icon: "mdi:bug-check" },
           { name: "Testing", icon: "mdi:test-tube" }
         ],
+        description: "Solo R&D mandate with mentor | C++/Blueprints, UE5 → Unity (C#)",
         bullets: [
-          "Developed a dynamic audio environment system for Unreal Engine 5.",
-          "Ported the dynamic audio system to Unity using Wwise.",
-          "Troubleshooted issues and delivered technical presentations."
+          "Built a Wwise take on Unreal’s Soundscape plugin: a dynamic ambient-audio demo for sound designers.",
+          "Learned Unreal Engine 5 on the job; built raycast sound selection and indoor/outdoor zones, then ported it to Unity."
         ]
       },
       {
@@ -104,15 +104,15 @@ export const resumeData: Record<'en' | 'fr', ResumeData> = {
           { name: "Confluence", icon: "logos:confluence" },
           { name: "Jira", icon: "logos:jira" }
         ],
+        description: "Team of 6 | C#, WPF/XAML, MVVM | Agile | shipped to main",
         bullets: [
-          "Developed 'Shortcut Explorer', a WPF/XAML tool for engine hotkeys.",
-          "Implemented search, filtering, and conflict detection for bindings.",
-          "Engineered a dynamic parsing system for shortcut data."
+          "Built Shortcut Explorer, a tool listing every engine shortcut, previously hard-coded with no way to find them.",
+          "Parsed shortcut attributes from the C# code and added search and conflict detection; widely adopted."
         ]
       },
       {
         date: "April 2022 - June 2022 (10 weeks)",
-        title: "Programmer Intern",
+        title: "Programmer Intern (Urbia project)",
         subtitle: "CDRIN - Matane, QC",
         companyLogo: "/images/Logo/Company/CDRIN_Logo.png",
         technologies: [
@@ -127,10 +127,10 @@ export const resumeData: Record<'en' | 'fr', ResumeData> = {
           { name: "Trello", icon: "logos:trello" },
           { name: "Testing", icon: "mdi:test-tube" }
         ],
+        description: "Client project, team of 5, main programmer | Unity/C# | educational city-builder",
         bullets: [
-          "Optimized an existing Unity codebase for client features.",
-          "Implemented new gameplay rules, buildings, and assets.",
-          "Performed game balancing and communicated progress."
+          "Completed a near-finished game: new buildings and rules, residential balance, flooding, and level tuning.",
+          "Worked with a 3D artist, a manager, and the client weekly; integrated 3D models and polished the game."
         ]
       }
     ],
@@ -192,7 +192,7 @@ export const resumeData: Record<'en' | 'fr', ResumeData> = {
     internships: [
       {
         date: "Mai 2025 - Août 2025 (Stage de 17 semaines)",
-        title: "Stagiaire Programmeur Gameplay",
+        title: "Stagiaire programmeur gameplay (projet NEO)",
         subtitle: "Ubisoft Montréal - Montréal, QC",
         companyLogo: "/images/Logo/Company/Logo_UBI_MTL.png",
         technologies: [
@@ -206,16 +206,16 @@ export const resumeData: Record<'en' | 'fr', ResumeData> = {
           { name: "Agile & Scrum", icon: "mdi:sync-circle" },
           { name: "Anglais", icon: "twemoji:flag-united-kingdom" }
         ],
+        description: "Équipe Combat de 8 | C++, moteur Anvil | Agile, tâches confiées par le lead, revue par les pairs",
         bullets: [
-          "Débogage et résolution de problèmes de gameplay complexes en C++.",
-          "Amélioration du ciblage des combats avec des vérifications de ligne de vue.",
-          "Création d'un système de suivi de données pour l'équilibrage.",
-          "Développement de nouveaux outils pour optimiser le flux de travail des designers."
+          "Extension de la télémétrie de combat pour aider les analystes à équilibrer ennemis et capacités.",
+          "Création et adaptation de fonctionnalités pour les designers, ex. un brouillard qui s’étend avec une tenue équipée.",
+          "Débogage et correction de problèmes de gameplay : santé, entrées, animations et ciblage."
         ]
       },
       {
-        date: "Septembre 2024 - Décembre 2024 (Stage de 15 semaines)",
-        title: "Stagiaire Ingénieur Logiciel",
+        date: "Septembre 2024 - Décembre 2024 (Stage de 16 semaines)",
+        title: "Stagiaire ingénieur logiciel (équipe Intégration Wwise)",
         subtitle: "Audiokinetic - Montréal, QC",
         companyLogo: "/images/Logo/Company/Audiokinetic_Logo.png",
         technologies: [
@@ -231,15 +231,15 @@ export const resumeData: Record<'en' | 'fr', ResumeData> = {
           { name: "Débogage", icon: "mdi:bug-check" },
           { name: "Tests", icon: "mdi:test-tube" }
         ],
+        description: "Mandat R&D en solo avec mentor | C++/Blueprints, UE5 → Unity (C#)",
         bullets: [
-          "Développement d'un système d'audio dynamique pour Unreal Engine 5.",
-          "Portage du système audio dynamique vers Unity avec Wwise.",
-          "Résolution de problèmes et réalisation de présentations techniques."
+          "Création d’un équivalent Wwise du plugin Soundscape d’Unreal : une démo d’audio ambiant dynamique.",
+          "Apprentissage d’UE5 sur le tas ; sons choisis par raycast, zones intérieur/extérieur, portage Unity."
         ]
       },
       {
         date: "Janvier 2024 - Mai 2024 (Stage de 16 semaines)",
-        title: "Stagiaire Programmeur Outils",
+        title: "Stagiaire programmeur outils",
         subtitle: "Ubisoft Montréal - Montréal, QC",
         companyLogo: "/images/Logo/Company/Logo_UBI_MTL.png",
         technologies: [
@@ -256,15 +256,15 @@ export const resumeData: Record<'en' | 'fr', ResumeData> = {
           { name: "Confluence", icon: "logos:confluence" },
           { name: "Jira", icon: "logos:jira" }
         ],
+        description: "Équipe de 6 | C#, WPF/XAML, MVVM | Agile | livré sur la branche principale",
         bullets: [
-          "Développement de 'Shortcut Explorer', un outil WPF/XAML pour les raccourcis.",
-          "Implémentation de recherche, filtrage et détection de conflits.",
-          "Conception d'un système d'analyse dynamique des raccourcis du moteur."
+          "Création de Shortcut Explorer, qui liste les raccourcis du moteur, auparavant introuvables.",
+          "Lecture des attributs de raccourcis dans le code C#, recherche et détection de conflits. Outil adopté par les équipes."
         ]
       },
       {
         date: "Avril 2022 - Juin 2022 (Stage de 10 semaines)",
-        title: "Stagiaire Programmeur",
+        title: "Stagiaire programmeur (projet Urbia)",
         subtitle: "CDRIN - Matane, QC",
         companyLogo: "/images/Logo/Company/CDRIN_Logo.png",
         technologies: [
@@ -279,10 +279,10 @@ export const resumeData: Record<'en' | 'fr', ResumeData> = {
           { name: "Trello", icon: "logos:trello" },
           { name: "Tests", icon: "mdi:test-tube" }
         ],
+        description: "Projet client, équipe de 5, programmeur principal | Unity/C# | jeu éducatif de gestion urbaine",
         bullets: [
-          "Optimisation d'une base de code Unity pour les fonctionnalités client.",
-          "Implémentation de nouvelles règles de gameplay et bâtiments.",
-          "Équilibrage de jeu et communication de l'avancement technique."
+          "Finalisation d’un jeu presque terminé : bâtiments, règles, équilibre résidentiel, inondations.",
+          "Travail hebdomadaire avec un artiste 3D, un gestionnaire et le client ; intégration de modèles 3D et polissage."
         ]
       }
     ],
