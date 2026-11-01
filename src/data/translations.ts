@@ -79,7 +79,7 @@ export const translations: Record<Lang, UIStrings> = {
     langSwitchText: "FR 🇫🇷",
 
     heroTitle: "Hi, I'm <span class=\"highlight\">Manoël Nohra</span>",
-    heroSubtitle: "Gameplay Programmer · Former Ubisoft Montreal intern · Open to gameplay roles in Canada and Europe.",
+    heroSubtitle: "Gameplay Programmer · Building game systems in Unreal (C++) and Unity (C#) · Open to gameplay roles in Canada and Europe.",
     heroCtaGames: "See my games",
     heroCtaContact: "Contact me",
     aboutTitle: "About Me",
@@ -129,7 +129,7 @@ export const translations: Record<Lang, UIStrings> = {
     langSwitchText: "EN 🇬🇧",
 
     heroTitle: "Bonjour, je suis <span class=\"highlight\">Manoël Nohra</span>",
-    heroSubtitle: "Programmeur Gameplay · Ancien stagiaire chez Ubisoft Montréal · Ouvert aux postes gameplay au Canada et en Europe.",
+    heroSubtitle: "Programmeur Gameplay · Création de systèmes de jeu sous Unreal (C++) et Unity (C#) · Ouvert aux postes gameplay au Canada et en Europe.",
     heroCtaGames: "Voir mes jeux",
     heroCtaContact: "Me contacter",
     aboutTitle: "À Propos de Moi",
