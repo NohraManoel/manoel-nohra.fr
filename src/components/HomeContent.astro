@@ -2,9 +2,9 @@
 // src/components/HomeContent.astro
 import GameCard from './GameCard.astro';
 import ProjectFilter from './ProjectFilter.astro';
-import { translations } from '../data/translations';
+import { translations, links } from '../data/translations';
+import { Icon } from 'astro-icon/components';
 import { projects } from '../data/projects';
-import { calculateAge } from '../utils/date';
 
 interface Props {
   lang: 'en' | 'fr';
@@ -12,8 +12,6 @@ interface Props {
 
 const { lang } = Astro.props;
 const t = translations[lang];
-
-const age = calculateAge('REDACTED');
 
 const allTags = Array.from(new Set(projects.flatMap(p => p.tags[lang])))
   .filter(tag => !/^\d{4}$/.test(tag.toString().trim()))
@@ -26,6 +24,13 @@ const allTechs = Array.from(new Set(projects.flatMap(p => p.technologies.map(tec
   <section class="hero">
     <h1 fragment set:html={t.heroTitle}></h1>
     <p>{t.heroSubtitle}</p>
+    <div class="hero-actions">
+      <a href="#games" class="hero-btn primary">{t.heroCtaGames}</a>
+      <a href={`mailto:${links.email}`} class="hero-btn">{t.heroCtaContact}</a>
+      <a href={links.linkedin} target="_blank" rel="noopener noreferrer" class="hero-btn">LinkedIn</a>
+      <a href={links.github} target="_blank" rel="noopener noreferrer" class="hero-btn">GitHub</a>
+      <a href={links.itch} target="_blank" rel="noopener noreferrer" class="hero-btn">itch.io</a>
+    </div>
   </section>
 
   <section class="about-section" id="about">
@@ -45,38 +50,21 @@ const allTechs = Array.from(new Set(projects.flatMap(p => p.technologies.map(tec
         <div class="bento-grid">
           <div class="bento-item">
             <div class="icon-circle">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="details-icon" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="details-icon" aria-hidden="true"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
             </div>
             <div class="bento-content">
-              <strong>{t.labelBirth}</strong>
-              <span>{t.valBirth}</span>
+              <strong>{t.labelWork}</strong>
+              <span>🇨🇦 {t.valWorkCA}</span>
+              <span>🇪🇺 {t.valWorkEU}</span>
             </div>
           </div>
           <div class="bento-item">
             <div class="icon-circle">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="details-icon" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="details-icon" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
             </div>
             <div class="bento-content">
-              <strong>{t.labelAge}</strong>
-              <span>{age} {lang === 'en' ? 'years old' : 'ans'}</span>
-            </div>
-          </div>
-          <div class="bento-item">
-            <div class="icon-circle">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="details-icon" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-            </div>
-            <div class="bento-content">
-              <strong>{t.labelCity}</strong>
-              <span>{t.valCity}</span>
-            </div>
-          </div>
-          <div class="bento-item">
-            <div class="icon-circle">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="details-icon" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
-            </div>
-            <div class="bento-content">
-              <strong>{t.labelWebsite}</strong>
-              <a href={`https://${t.valBirth}`} target="_blank" rel="noopener noreferrer" class="text-link">manoel-nohra.fr</a>
+              <strong>{t.labelEmail}</strong>
+              <a href={`mailto:${links.email}`} class="text-link">{links.email}</a>
             </div>
           </div>
           <div class="bento-item bento-wide">
@@ -86,27 +74,21 @@ const allTechs = Array.from(new Set(projects.flatMap(p => p.technologies.map(tec
             <div class="bento-content">
               <strong>{t.labelDegree}</strong>
               <span>{t.valDegree}</span>
+              <span class="degree-meta">{t.valDegreeMeta}</span>
             </div>
           </div>
-          <div class="bento-item">
+          <div class="bento-item bento-wide">
             <div class="icon-circle">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="details-icon" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="details-icon" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
             </div>
             <div class="bento-content">
-              <strong>{t.labelPhone}</strong>
-              <div class="contact-links">
-                <a href={`tel:${t.valPhoneFR.replace(/\s+/g, '')}`}>{t.valPhoneFR}</a>
-                <a href={`tel:${t.valPhoneCA.replace(/\s+/g, '').replace(/-/g, '')}`}>{t.valPhoneCA}</a>
+              <strong>{t.labelLinks}</strong>
+              <div class="logo-links">
+                <a href={links.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" title="LinkedIn"><Icon name="simple-icons:linkedin" /></a>
+                <a href={links.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub" title="GitHub"><Icon name="simple-icons:github" /></a>
+                <a href={links.itch} target="_blank" rel="noopener noreferrer" aria-label="itch.io" title="itch.io"><Icon name="simple-icons:itchdotio" /></a>
+                <a href={t.cvHref} download aria-label={t.downloadCv} title={t.downloadCv}><Icon name="mdi:file-download-outline" /></a>
               </div>
-            </div>
-          </div>
-          <div class="bento-item">
-            <div class="icon-circle">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="details-icon" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-            </div>
-            <div class="bento-content">
-              <strong>{t.labelEmail}</strong>
-              <a href={`mailto:${t.valEmail}`} class="text-link">{t.valEmail}</a>
             </div>
           </div>
 
@@ -121,6 +103,8 @@ const allTechs = Array.from(new Set(projects.flatMap(p => p.technologies.map(tec
                 <span class="game-tag">Metaphor: ReFantazio</span>
                 <span class="game-tag">Final Fantasy X</span>
                 <span class="game-tag">Hollow Knight: Silksong</span>
+                <span class="game-tag">Elden Ring</span>
+                <span class="game-tag">Zelda: Tears of the Kingdom</span>
               </div>
             </div>
           </div>
@@ -217,6 +201,43 @@ const allTechs = Array.from(new Set(projects.flatMap(p => p.technologies.map(tec
     animation: textReveal 1s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
     opacity: 0;
     transform: translateY(20px);
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.8rem;
+    margin-top: 2rem;
+    animation: textReveal 1s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  .hero-btn {
+    padding: 0.7rem 1.4rem;
+    border-radius: 8px;
+    font-weight: 600;
+    color: var(--text-main);
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-light);
+    transition: all 0.2s ease;
+  }
+
+  .hero-btn:hover {
+    color: #fff;
+    border-color: var(--border-glow);
+    transform: translateY(-2px);
+  }
+
+  .hero-btn.primary {
+    background: linear-gradient(135deg, var(--accent, #3b82f6) 0%, #2563eb 100%);
+    border-color: transparent;
+    color: #fff;
+  }
+
+  .hero-btn.primary:hover {
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
   }
 
   @keyframes textReveal {
@@ -378,6 +399,11 @@ const allTechs = Array.from(new Set(projects.flatMap(p => p.technologies.map(tec
     opacity: 0.8;
   }
 
+  .degree-meta {
+    color: var(--text-muted, #94a3b8);
+    font-size: 0.85rem;
+  }
+
   .text-link {
     color: var(--accent-light, #60a5fa);
     text-decoration: none;
@@ -388,26 +414,40 @@ const allTechs = Array.from(new Set(projects.flatMap(p => p.technologies.map(tec
     color: #fff;
   }
 
-  .contact-links {
+  .logo-links {
     display: flex;
-    flex-direction: column;
-    gap: 0.2rem;
+    flex-wrap: wrap;
+    gap: 0.8rem;
   }
 
-  .contact-links a {
-    color: var(--text-main, #e2e8f0);
-    text-decoration: none;
-    transition: color 0.2s;
+  .logo-links a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    color: var(--text-main);
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-light);
+    transition: all 0.2s ease;
   }
 
-  .contact-links a:hover {
-    color: var(--accent-light, #60a5fa);
+  .logo-links a:hover {
+    color: var(--accent-light);
+    border-color: var(--border-glow);
+    transform: translateY(-2px);
+  }
+
+  .logo-links svg {
+    width: 22px;
+    height: 22px;
   }
 
   /* Grille réactive pour les GameCards */
   .games-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(min(450px, 100%), 1fr));
     gap: 2.5rem;
   }
 

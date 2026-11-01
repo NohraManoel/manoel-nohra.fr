@@ -1,5 +1,7 @@
 ---
 // src/components/ProjectFilter.astro
+import { translations } from '../data/translations';
+
 interface Props {
   allTags: string[];
   allTechs: string[];
@@ -8,31 +10,35 @@ interface Props {
 
 const { allTags, allTechs, lang } = Astro.props;
 
-const searchPlaceholder = lang === 'en' ? 'Search projects (title, skill, etc...)' : 'Rechercher des projets (titre, compétence, etc...)';
+const t = translations[lang];
 ---
 <div class="project-filter">
   <div class="search-bar">
     <div class="search-input-wrapper">
-      <input type="text" id="project-search" placeholder={searchPlaceholder} />
+      <input type="text" id="project-search" placeholder={t.searchPlaceholder} />
     </div>
     <button id="clear-filters" class="clear-filters-btn" aria-label="Clear all filters">
-      {lang === 'en' ? 'Clear All' : 'Tout effacer'}
+      {t.clearFilters}
     </button>
   </div>
-  
-  <div class="filter-chips">
-    <span class="filter-group-label">{lang === 'en' ? 'Technologies:' : 'Technologies:'}</span>
-    {allTechs.map(tech => (
-      <button class="filter-chip" data-filter-type="techs" data-filter-val={tech.toLowerCase()}>{tech}</button>
-    ))}
-  </div>
-  
-  <div class="filter-chips">
-    <span class="filter-group-label">{lang === 'en' ? 'Tags:' : 'Tags:'}</span>
-    {allTags.map(tag => (
-      <button class="filter-chip" data-filter-type="tags" data-filter-val={tag.toLowerCase()}>{tag}</button>
-    ))}
-  </div>
+
+  <details class="filter-toggle">
+    <summary>{t.filtersToggle}</summary>
+
+    <div class="filter-chips">
+      <span class="filter-group-label">{t.filterTechs}</span>
+      {allTechs.map(tech => (
+        <button class="filter-chip" data-filter-type="techs" data-filter-val={tech.toLowerCase()}>{tech}</button>
+      ))}
+    </div>
+    
+    <div class="filter-chips">
+      <span class="filter-group-label">{t.filterTags}</span>
+      {allTags.map(tag => (
+        <button class="filter-chip" data-filter-type="tags" data-filter-val={tag.toLowerCase()}>{tag}</button>
+      ))}
+    </div>
+  </details>
 </div>
 
 <script>
@@ -134,7 +140,7 @@ const searchPlaceholder = lang === 'en' ? 'Search projects (title, skill, etc...
     margin-bottom: 2.5rem;
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 1rem;
   }
 
   .search-bar {
@@ -190,6 +196,28 @@ const searchPlaceholder = lang === 'en' ? 'Search projects (title, skill, etc...
     color: #fff;
   }
 
+  .filter-toggle summary {
+    cursor: pointer;
+    color: var(--text-muted, #94a3b8);
+    font-weight: 600;
+    font-size: 0.9rem;
+    width: fit-content;
+    user-select: none;
+  }
+
+  .filter-toggle summary:hover,
+  .filter-toggle[open] summary {
+    color: var(--accent-light, #60a5fa);
+  }
+
+  .filter-toggle[open] summary {
+    margin-bottom: 1.2rem;
+  }
+
+  .filter-toggle .filter-chips + .filter-chips {
+    margin-top: 1.2rem;
+  }
+
   .filter-chips {
     display: flex;
     flex-wrap: wrap;
@@ -203,6 +231,21 @@ const searchPlaceholder = lang === 'en' ? 'Search projects (title, skill, etc...
     font-weight: 600;
     margin-right: 0.5rem;
     min-width: 100px;
+  }
+
+  @media (max-width: 600px) {
+    .project-filter {
+      padding: 1rem;
+    }
+    .search-bar {
+      flex-wrap: wrap;
+    }
+    .clear-filters-btn:not(.visible) {
+      display: none;
+    }
+    .filter-group-label {
+      flex-basis: 100%;
+    }
   }
 
   .filter-chip {

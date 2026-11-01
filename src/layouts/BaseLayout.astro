@@ -6,19 +6,17 @@ interface Props {
 }
 
 const { title, description } = Astro.props;
-const currentLang = Astro.currentLocale || 'en';
+const currentLang = (Astro.currentLocale || 'en') as Lang;
+const t = translations[currentLang];
 
-const defaultDesc = currentLang === 'en' 
-  ? "Manoël Nohra - Software Engineer & Gameplay Programmer Portfolio. Explore game development projects and professional journey."
-  : "Manoël Nohra - Portfolio de Génie Logiciel & Programmation Gameplay. Découvrez ses projets de jeu et son parcours professionnel.";
-
-const metaDescription = description || defaultDesc;
+const metaDescription = description || t.metaDescription;
 const siteUrl = Astro.site || 'https://manoel-nohra.fr';
 const canonicalURL = new URL(Astro.url.pathname, siteUrl);
 const socialImageURL = new URL('/images/profile.jpg', siteUrl);
 
 // On importe notre composant de navigation isolé
 import Navigation from '../components/Navigation.astro';
+import { translations, links, type Lang } from '../data/translations';
 ---
 
 <!DOCTYPE html>
@@ -60,7 +58,13 @@ import Navigation from '../components/Navigation.astro';
     </main>
 
     <footer>
-      <p>&copy; {new Date().getFullYear()} - {currentLang === 'en' ? 'My Game Portfolio' : 'Mon Portfolio de Jeux'}</p>
+      <div class="footer-links">
+        <a href={`mailto:${links.email}`}>{links.email}</a>
+        <a href={links.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a href={links.github} target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a href={links.itch} target="_blank" rel="noopener noreferrer">itch.io</a>
+      </div>
+      <p>&copy; {new Date().getFullYear()} {t.footer}</p>
     </footer>
   </body>
 </html>
@@ -83,6 +87,12 @@ import Navigation from '../components/Navigation.astro';
   html {
     scroll-behavior: smooth;
     scroll-padding-top: 80px; /* Accounts for the sticky navbar */
+  }
+
+  @media (max-width: 768px) {
+    html {
+      scroll-padding-top: 120px; /* Navbar takes two rows on mobile */
+    }
   }
 
   * {
@@ -119,6 +129,14 @@ import Navigation from '../components/Navigation.astro';
     color: var(--text-muted);
     font-size: 0.9rem;
     border-top: 1px solid var(--bg-card);
+  }
+
+  .footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem 1.5rem;
+    margin-bottom: 0.8rem;
   }
 
   a {

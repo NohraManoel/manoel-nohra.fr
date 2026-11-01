@@ -2,6 +2,7 @@
 // src/components/GameCard.astro
 import { Icon } from 'astro-icon/components';
 import type { Skill } from '../data/resume';
+import { translations, type Lang } from '../data/translations';
 
 interface Props {
   title: string;
@@ -13,6 +14,7 @@ interface Props {
 }
 
 const { title, description, tags = [], technologies = [], media = [], link } = Astro.props;
+const t = translations[(Astro.currentLocale || 'en') as Lang];
 
 function getYoutubeEmbedUrl(url: string) {
   if (url.includes('youtube.com') || url.includes('youtu.be')) {
@@ -59,10 +61,11 @@ const techsStr = sortedTechs.map(t => t.name.toLowerCase()).join(',');
             frameborder="0" 
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
             allowfullscreen
+            loading="lazy"
           />
         )}
         {mainMedia && !getYoutubeEmbedUrl(mainMedia) && mainMedia.endsWith('.mp4') && (
-          <video src={mainMedia} autoplay loop muted playsinline />
+          <video src={mainMedia} data-autoplay loop muted playsinline preload="none" />
         )}
         {mainMedia && !getYoutubeEmbedUrl(mainMedia) && !mainMedia.endsWith('.mp4') && (
           <img src={mainMedia} alt={`Visual of ${title}`} loading="lazy" />
@@ -81,10 +84,11 @@ const techsStr = sortedTechs.map(t => t.name.toLowerCase()).join(',');
                     frameborder="0" 
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                     allowfullscreen
+                    loading="lazy"
                   />
                 )}
                 {!getYoutubeEmbedUrl(item) && item.endsWith('.mp4') && (
-                  <video src={item} autoplay loop muted playsinline />
+                  <video src={item} data-autoplay loop muted playsinline preload="none" />
                 )}
                 {!getYoutubeEmbedUrl(item) && !item.endsWith('.mp4') && (
                   <img src={item} alt={`Thumbnail of ${title}`} loading="lazy" />
@@ -101,11 +105,12 @@ const techsStr = sortedTechs.map(t => t.name.toLowerCase()).join(',');
                     frameborder="0" 
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                     allowfullscreen
+                    loading="lazy"
                     tabindex="-1"
                   />
                 )}
                 {!getYoutubeEmbedUrl(item) && item.endsWith('.mp4') && (
-                  <video src={item} autoplay loop muted playsinline tabindex="-1" />
+                  <video src={item} data-autoplay loop muted playsinline preload="none" tabindex="-1" />
                 )}
                 {!getYoutubeEmbedUrl(item) && !item.endsWith('.mp4') && (
                   <img src={item} alt={`Thumbnail of ${title}`} loading="lazy" />
@@ -129,7 +134,7 @@ const techsStr = sortedTechs.map(t => t.name.toLowerCase()).join(',');
     </div>
   ) : (
     <div class="image-placeholder">
-      <span>Pas de média</span>
+      <span>{t.noMedia}</span>
     </div>
   )}
 
@@ -169,68 +174,101 @@ const techsStr = sortedTechs.map(t => t.name.toLowerCase()).join(',');
       )}
     </div>
     <a href={link} target="_blank" rel="noopener noreferrer" class="btn">
-      {Astro.currentLocale === 'en' ? 'View Project' : 'Voir le projet'}
+      {t.viewProject}
     </a>
   </div>
 </div>
 
 <script>
+  import { enableDragScroll } from '../utils/dragScroll';
+
   // Lightbox logic
   document.addEventListener('DOMContentLoaded', () => {
-    if (!document.getElementById('global-lightbox')) {
-      const lightbox = document.createElement('div');
-      lightbox.id = 'global-lightbox';
-      lightbox.innerHTML = `
-        <div class="lightbox-backdrop"></div>
-        <button class="lightbox-close" aria-label="Close">&times;</button>
-        <div class="lightbox-content"></div>
-      `;
-      document.body.appendChild(lightbox);
-
-      const closeLightbox = () => {
-        lightbox.classList.remove('active');
-        const content = lightbox.querySelector('.lightbox-content');
-        if (content) content.innerHTML = ''; // Clear content to stop videos
-      };
-
-      lightbox.querySelector('.lightbox-backdrop')?.addEventListener('click', closeLightbox);
-      lightbox.querySelector('.lightbox-close')?.addEventListener('click', closeLightbox);
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') closeLightbox();
-      });
-    }
-
-    const lightbox = document.getElementById('global-lightbox')!;
+    const lightbox = document.createElement('div');
+    lightbox.id = 'global-lightbox';
+    lightbox.innerHTML = `
+      <div class="lightbox-backdrop"></div>
+      <button class="lightbox-close" aria-label="Close">&times;</button>
+      <button class="lightbox-nav lightbox-prev" aria-label="Previous">&#8249;</button>
+      <button class="lightbox-nav lightbox-next" aria-label="Next">&#8250;</button>
+      <div class="lightbox-content"></div>
+    `;
+    document.body.appendChild(lightbox);
     const content = lightbox.querySelector('.lightbox-content')!;
 
+    // Media of the gallery currently opened, so prev/next stay within one project
+    let items: HTMLElement[] = [];
+    let index = 0;
+
+    const show = (i: number) => {
+      index = (i + items.length) % items.length;
+      const clone = items[index].cloneNode(true) as HTMLElement;
+      clone.classList.remove('lightbox-trigger');
+      // If it's a video, add controls and unmute for the enlarged view
+      if (clone instanceof HTMLVideoElement) {
+        clone.autoplay = true;
+        clone.controls = true;
+        clone.muted = false;
+      }
+      content.replaceChildren(clone);
+      lightbox.classList.toggle('single', items.length < 2);
+    };
+
+    const closeLightbox = () => {
+      lightbox.classList.remove('active');
+      content.innerHTML = ''; // Clear content to stop videos
+    };
+
+    lightbox.querySelector('.lightbox-backdrop')!.addEventListener('click', closeLightbox);
+    lightbox.querySelector('.lightbox-close')!.addEventListener('click', closeLightbox);
+    lightbox.querySelector('.lightbox-prev')!.addEventListener('click', () => show(index - 1));
+    lightbox.querySelector('.lightbox-next')!.addEventListener('click', () => show(index + 1));
+    document.addEventListener('keydown', (e) => {
+      if (!lightbox.classList.contains('active')) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowLeft') show(index - 1);
+      if (e.key === 'ArrowRight') show(index + 1);
+    });
+
+    // Swipe on touch screens
+    let touchX = 0;
+    lightbox.addEventListener('touchstart', (e) => { touchX = e.touches[0].clientX; }, { passive: true });
+    lightbox.addEventListener('touchend', (e) => {
+      const dx = e.changedTouches[0].clientX - touchX;
+      if (Math.abs(dx) > 50) show(index + (dx < 0 ? 1 : -1));
+    });
+
     // Attach click listeners to all images and videos in media galleries
-    document.querySelectorAll('.game-card .media-gallery img, .game-card .media-gallery video').forEach(mediaEl => {
-      mediaEl.classList.add('lightbox-trigger');
+    document.querySelectorAll('.game-card .media-gallery').forEach(gallery => {
+      const media = Array.from(gallery.querySelectorAll<HTMLElement>('img, video'));
+      // Skip the marquee duplicates when navigating
+      const unique = media.filter(el => !el.closest('[aria-hidden="true"]'));
 
-      mediaEl.addEventListener('click', (e) => {
-        const clone = (e.currentTarget as HTMLElement).cloneNode(true) as HTMLElement;
-        clone.classList.remove('lightbox-trigger');
-        
-        // If it's a video, add controls and unmute for the enlarged view
-        if (clone.tagName === 'VIDEO') {
-          (clone as HTMLVideoElement).controls = true;
-          (clone as HTMLVideoElement).muted = false;
-        }
-
-        content.innerHTML = '';
-        content.appendChild(clone);
-        lightbox.classList.add('active');
+      media.forEach(mediaEl => {
+        mediaEl.classList.add('lightbox-trigger');
+        mediaEl.addEventListener('click', () => {
+          items = unique;
+          const src = mediaEl.getAttribute('src');
+          show(Math.max(0, unique.findIndex(el => el.getAttribute('src') === src)));
+          lightbox.classList.add('active');
+        });
       });
     });
+
+    // Only play videos while they are on screen (saves bandwidth and battery)
+    const videoObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        const video = entry.target as HTMLVideoElement;
+        if (entry.isIntersecting) video.play().catch(() => {});
+        else video.pause();
+      });
+    }, { threshold: 0.25 });
+    document.querySelectorAll('.game-card video[data-autoplay]').forEach(v => videoObserver.observe(v));
 
     // Drag to scroll logic for sub-media
     document.querySelectorAll('.sub-media').forEach((track) => {
       const isCarousel = track.classList.contains('is-carousel');
       
-      let isDown = false;
-      let startX = 0;
-      let scrollLeft = 0;
-      let isDragging = false;
       let scrollSpeed = 0.5; // pixels per frame for auto scroll
       let exactScroll = track.scrollLeft;
 
@@ -276,8 +314,13 @@ const techsStr = sortedTechs.map(t => t.name.toLowerCase()).join(',');
         }
       };
 
+      const isMouseDown = enableDragScroll(track as HTMLElement, () => {
+        exactScroll = track.scrollLeft;
+        loopScroll();
+      });
+
       const autoScroll = () => {
-        if (!isDown && isCarousel && !isHovered) {
+        if (!isMouseDown() && isCarousel && !isHovered) {
           exactScroll += scrollSpeed;
           track.scrollLeft = exactScroll;
           loopScroll();
@@ -289,53 +332,11 @@ const techsStr = sortedTechs.map(t => t.name.toLowerCase()).join(',');
         autoScroll();
       }
 
-      track.addEventListener('mousedown', (e) => {
-        isDown = true;
-        isDragging = false;
-        startX = (e as MouseEvent).pageX - (track as HTMLElement).offsetLeft;
-        scrollLeft = track.scrollLeft;
-        exactScroll = track.scrollLeft;
-      });
-
-      track.addEventListener('mouseleave', () => {
-        isDown = false;
-      });
-
-      track.addEventListener('mouseup', () => {
-        isDown = false;
-        setTimeout(() => {
-          isDragging = false;
-        }, 50);
-      });
-
-      track.addEventListener('mousemove', (e) => {
-        if (!isDown) return;
-        e.preventDefault();
-        const x = (e as MouseEvent).pageX - (track as HTMLElement).offsetLeft;
-        const walk = (x - startX) * 2;
-        if (Math.abs(walk) > 5) {
-          isDragging = true;
-        }
-        track.scrollLeft = scrollLeft - walk;
-        exactScroll = track.scrollLeft;
-        loopScroll();
-      });
-
-      // Prevent lightbox click if we just dragged
-      track.addEventListener('click', (e) => {
-        if (isDragging) {
-          e.preventDefault();
-          e.stopPropagation();
-        }
-      }, true);
 
       // Intersection Observer to pause out-of-view videos
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (!entry.isIntersecting) {
-            const video = entry.target.querySelector('video');
-            if (video) video.pause();
-            
             const iframe = entry.target.querySelector('iframe');
             if (iframe && iframe.contentWindow) {
               iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
@@ -399,6 +400,34 @@ const techsStr = sortedTechs.map(t => t.name.toLowerCase()).join(',');
     transition: color 0.2s;
   }
   
+  :global(.lightbox-nav) {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 100001;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(15, 23, 42, 0.7);
+    color: #fff;
+    font-size: 2rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  :global(.lightbox-nav:hover) {
+    background: rgba(59, 130, 246, 0.8);
+  }
+
+  :global(.lightbox-prev) { left: 16px; }
+  :global(.lightbox-next) { right: 16px; }
+
+  :global(#global-lightbox.single .lightbox-nav) {
+    display: none;
+  }
+
   :global(.lightbox-close:hover) {
     color: var(--accent-light, #60a5fa);
   }
@@ -484,6 +513,13 @@ const techsStr = sortedTechs.map(t => t.name.toLowerCase()).join(',');
   
   .sub-media-wrapper:hover .carousel-btn {
     opacity: 1;
+  }
+
+  /* Touch screens can't hover: always show the arrows */
+  @media (hover: none) {
+    .carousel-btn {
+      opacity: 1;
+    }
   }
   
   .carousel-btn:hover {

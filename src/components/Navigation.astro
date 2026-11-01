@@ -1,8 +1,13 @@
 ---
 // src/components/Navigation.astro
 
+import { translations, type Lang } from '../data/translations';
+
 // Astro détecte la langue actuelle ('fr' ou 'en') depuis l'URL
-const currentLang = Astro.currentLocale || 'en';
+const currentLang = (Astro.currentLocale || 'en') as Lang;
+const t = translations[currentLang];
+const homeHref = currentLang === 'en' ? '/' : '/fr';
+const resumeHref = currentLang === 'en' ? '/parcours' : '/fr/parcours';
 
 // On récupère l'URL actuelle pour savoir où rediriger si on change de langue
 const currentPath = Astro.url.pathname;
@@ -17,45 +22,42 @@ const isResume = currentPath.includes('/parcours');
 <nav class="navbar">
   <div class="nav-container">
     <div class="nav-left">
-      <a href={isHome ? '#' : (currentLang === 'en' ? '/' : '/fr')} class="logo">MN</a>
+      <a href={isHome ? '#' : homeHref} class="logo">MN</a>
       <div class="main-links">
-        <a href={isHome ? '#' : (currentLang === 'en' ? '/' : '/fr')} class={isHome ? 'active-page' : ''}>
-          {currentLang === 'en' ? 'Home' : 'Accueil'}
+        <a href={isHome ? '#' : homeHref} class={isHome ? 'active-page' : ''}>
+          {t.navHome}
         </a>
-        <a href={isResume ? '#' : (currentLang === 'en' ? '/parcours' : '/fr/parcours')} class={isResume ? 'active-page' : ''}>
-          {currentLang === 'en' ? 'Resume' : 'Parcours'}
+        <a href={isResume ? '#' : resumeHref} class={isResume ? 'active-page' : ''}>
+          {t.navResume}
         </a>
       </div>
     </div>
 
-    <div class="nav-right">
-
-      {(isHome || isResume) && (
-        <div class="sub-links">
-          {isHome && (
-            <>
-              <a href="#about" class="section-link">{currentLang === 'en' ? 'About Me' : 'À Propos'}</a>
-              <a href="#games" class="section-link">{currentLang === 'en' ? 'My Games' : 'Mes Jeux'}</a>
-            </>
-          )}
-          {isResume && (
-            <>
-              <a href="#skills" class="section-link">{currentLang === 'en' ? 'Skills' : 'Compétences'}</a>
-              <a href="#experience" class="section-link">{currentLang === 'en' ? 'Experience' : 'Expériences'}</a>
-              <a href="#education" class="section-link">{currentLang === 'en' ? 'Education' : 'Formations'}</a>
-              <a href="#extracurricular" class="section-link">{currentLang === 'en' ? 'Extras' : 'Extras'}</a>
-            </>
-          )}
-        </div>
-      )}
-      <a 
-        href={switchLangLink} 
-        class="lang-switch" 
-        aria-label={currentLang === 'en' ? "Switch website language to French" : "Changer la langue du site en Anglais"}
-      >
-        {currentLang === 'en' ? 'FR 🇫🇷' : 'EN 🇬🇧'}
-      </a>
-    </div>
+    {(isHome || isResume) && (
+      <div class="sub-links">
+        {isHome && (
+          <>
+            <a href="#about" class="section-link">{t.navAbout}</a>
+            <a href="#games" class="section-link">{t.navGames}</a>
+          </>
+        )}
+        {isResume && (
+          <>
+            <a href="#skills" class="section-link">{t.navSkills}</a>
+            <a href="#experience" class="section-link">{t.navExperience}</a>
+            <a href="#education" class="section-link">{t.navEducation}</a>
+            <a href="#extracurricular" class="section-link">{t.navExtras}</a>
+          </>
+        )}
+      </div>
+    )}
+    <a 
+      href={switchLangLink} 
+      class="lang-switch" 
+      aria-label={t.langSwitchLabel}
+    >
+      {t.langSwitchText}
+    </a>
   </div>
 </nav>
 
@@ -115,9 +117,10 @@ const isResume = currentPath.includes('/parcours');
     text-decoration: none;
   }
 
-  .nav-left, .nav-right {
+  .nav-left {
     display: flex;
     align-items: center;
+    margin-right: auto;
   }
 
   .main-links {
@@ -194,6 +197,7 @@ const isResume = currentPath.includes('/parcours');
     font-size: 0.9rem;
     transition: all 0.2s ease;
     cursor: pointer;
+    white-space: nowrap;
   }
 
   .lang-switch:hover {
@@ -201,5 +205,39 @@ const isResume = currentPath.includes('/parcours');
     border-color: var(--border-glow);
     transform: translateY(-1px);
     box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  }
+
+  /* Mobile: section links move to a second, swipeable row */
+  @media (max-width: 768px) {
+    .nav-container {
+      flex-wrap: wrap;
+      padding: 0.75rem 1rem;
+      row-gap: 0.6rem;
+    }
+
+    .main-links a {
+      margin-left: 1rem;
+    }
+
+    .sub-links {
+      order: 3;
+      flex-basis: 100%;
+      gap: 1.2rem;
+      overflow-x: auto;
+      scrollbar-width: none;
+      border-right: none;
+      border-top: 1px solid var(--border-light);
+      margin-right: 0;
+      padding: 0.6rem 0 0;
+    }
+
+    .sub-links::-webkit-scrollbar {
+      display: none;
+    }
+
+    .sub-links a {
+      margin-left: 0;
+      white-space: nowrap;
+    }
   }
 </style>

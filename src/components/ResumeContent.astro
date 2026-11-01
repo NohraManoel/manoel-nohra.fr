@@ -38,16 +38,8 @@ const data = resumeData[lang];
 
   <div class="section-container" id="experience">
     <h2 class="section-title"><Icon name="mdi:briefcase" class="title-icon" /> {t.timelineInternships}</h2>
-    <div class="carousel-wrapper">
-      <button class="carousel-btn prev" aria-label="Previous"><Icon name="mdi:chevron-left" /></button>
-      <div class="carousel-track experience-carousel">
-        {data.internships.map((item) => (
-          <div class="carousel-slide exp-slide">
-            <ExperienceCard {...item} />
-          </div>
-        ))}
-      </div>
-      <button class="carousel-btn next" aria-label="Next"><Icon name="mdi:chevron-right" /></button>
+    <div class="exp-list">
+      {data.internships.map((item) => <ExperienceCard {...item} />)}
     </div>
   </div>
 
@@ -58,7 +50,7 @@ const data = resumeData[lang];
       <div class="carousel-track experience-carousel">
         {data.education.map((item) => (
           <div class="carousel-slide exp-slide auto-height-slide">
-            <ExperienceCard {...item} disableFlip={true} />
+            <ExperienceCard {...item} />
           </div>
         ))}
       </div>
@@ -73,7 +65,7 @@ const data = resumeData[lang];
       <div class="carousel-track experience-carousel">
         {data.extracurriculars.map((item) => (
           <div class="carousel-slide exp-slide auto-height-slide">
-            <ExperienceCard {...item} disableFlip={true} />
+            <ExperienceCard {...item} />
           </div>
         ))}
       </div>
@@ -124,6 +116,12 @@ const data = resumeData[lang];
 
   .section-container {
     margin-bottom: 3.5rem;
+  }
+
+  .exp-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
   }
 
   .carousel-wrapper {
@@ -202,6 +200,8 @@ const data = resumeData[lang];
 </style>
 
 <script>
+  import { enableDragScroll } from '../utils/dragScroll';
+
   // Simple script for carousel arrows
   document.querySelectorAll('.carousel-wrapper').forEach((wrapper) => {
     const track = wrapper.querySelector('.carousel-track') as HTMLElement;
@@ -244,49 +244,7 @@ const data = resumeData[lang];
         }
       });
 
-      // Drag to scroll logic
-      let isDown = false;
-      let startX = 0;
-      let scrollLeft = 0;
-      let isDragging = false;
-
-      track.addEventListener('mousedown', (e) => {
-        isDown = true;
-        isDragging = false;
-        startX = e.pageX - track.offsetLeft;
-        scrollLeft = track.scrollLeft;
-      });
-
-      track.addEventListener('mouseleave', () => {
-        isDown = false;
-      });
-
-      track.addEventListener('mouseup', () => {
-        isDown = false;
-        // Delay clearing isDragging so the capture-phase click handler can intercept it
-        setTimeout(() => {
-          isDragging = false;
-        }, 50);
-      });
-
-      track.addEventListener('mousemove', (e) => {
-        if (!isDown) return;
-        e.preventDefault();
-        const x = e.pageX - track.offsetLeft;
-        const walk = (x - startX) * 2; // scroll speed multiplier
-        if (Math.abs(walk) > 5) {
-          isDragging = true;
-        }
-        track.scrollLeft = scrollLeft - walk;
-      });
-
-      // Prevent clicks (e.g., flipping the card) if we just dragged
-      track.addEventListener('click', (e) => {
-        if (isDragging) {
-          e.preventDefault();
-          e.stopPropagation();
-        }
-      }, true); // use capture phase
+      enableDragScroll(track);
     }
   });
 </script>
