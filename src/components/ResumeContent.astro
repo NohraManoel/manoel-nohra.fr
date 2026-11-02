@@ -45,31 +45,15 @@ const data = resumeData[lang];
 
   <div class="section-container" id="education">
     <h2 class="section-title"><Icon name="mdi:school" class="title-icon" /> {t.timelineEducation}</h2>
-    <div class="carousel-wrapper">
-      <button class="carousel-btn prev" aria-label="Previous"><Icon name="mdi:chevron-left" /></button>
-      <div class="carousel-track experience-carousel">
-        {data.education.map((item) => (
-          <div class="carousel-slide exp-slide auto-height-slide">
-            <ExperienceCard {...item} />
-          </div>
-        ))}
-      </div>
-      <button class="carousel-btn next" aria-label="Next"><Icon name="mdi:chevron-right" /></button>
+    <div class="exp-list">
+      {data.education.map((item) => <ExperienceCard {...item} />)}
     </div>
   </div>
 
   <div class="section-container" id="extracurricular">
     <h2 class="section-title"><Icon name="mdi:gamepad-variant" class="title-icon" /> {t.timelineExtracurricular}</h2>
-    <div class="carousel-wrapper">
-      <button class="carousel-btn prev" aria-label="Previous"><Icon name="mdi:chevron-left" /></button>
-      <div class="carousel-track experience-carousel">
-        {data.extracurriculars.map((item) => (
-          <div class="carousel-slide exp-slide auto-height-slide">
-            <ExperienceCard {...item} />
-          </div>
-        ))}
-      </div>
-      <button class="carousel-btn next" aria-label="Next"><Icon name="mdi:chevron-right" /></button>
+    <div class="exp-list">
+      {data.extracurriculars.map((item) => <ExperienceCard {...item} />)}
     </div>
   </div>
 </div>
@@ -151,16 +135,8 @@ const data = resumeData[lang];
     height: 450px; /* fixed height for cards to look uniform */
   }
 
-  .auto-height-slide {
-    height: auto !important;
-  }
-
   .skill-slide {
     flex: 0 0 280px;
-  }
-
-  .exp-slide {
-    flex: 0 0 320px;
   }
 
   .carousel-btn {
@@ -191,7 +167,7 @@ const data = resumeData[lang];
   .next { right: -50px; }
   
   @media (max-width: 768px) {
-    .skill-slide, .exp-slide {
+    .skill-slide {
       flex: 0 0 85vw;
     }
     .prev { left: 0; }

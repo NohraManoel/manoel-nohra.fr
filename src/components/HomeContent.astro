@@ -13,17 +13,18 @@ interface Props {
 const { lang } = Astro.props;
 const t = translations[lang];
 
-const allTags = Array.from(new Set(projects.flatMap(p => p.tags[lang])))
-  .filter(tag => !/^\d{4}$/.test(tag.toString().trim()))
-  .sort((a, b) => a.localeCompare(b));
-const allTechs = Array.from(new Set(projects.flatMap(p => p.technologies.map(tech => tech.name))))
-  .sort((a, b) => a.localeCompare(b));
+// Only offer filters shared by 2+ projects: a filter matching a single game is noise
+const sharedValues = (values: string[]) =>
+  [...new Set(values)].filter(v => values.indexOf(v) !== values.lastIndexOf(v)).sort((a, b) => a.localeCompare(b));
+const allTags = sharedValues(projects.flatMap(p => p.tags[lang]));
+const allTechs = sharedValues(projects.flatMap(p => p.technologies.map(tech => tech.name)))
+  .filter(tech => tech !== 'Git');
 ---
 
 <div class="home-container animate-fade-in">
   <section class="hero">
     <h1 fragment set:html={t.heroTitle}></h1>
-    <p>{t.heroSubtitle}</p>
+    <p>{t.heroSubtitle.split(" · ").map((line, i) => <>{i > 0 && <br />}{line}</>)}</p>
     <div class="hero-actions">
       <a href="#games" class="hero-btn primary">{t.heroCtaGames}</a>
       <a href={`mailto:${links.email}`} class="hero-btn">{t.heroCtaContact}</a>

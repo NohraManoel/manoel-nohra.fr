@@ -31,8 +31,8 @@ const projectsData: Project[] = [
       ]
     },
     tags: {
-      en: ["3rd Person", "Action", "University Project", "2025", "LOG725"],
-      fr: ["3ème Personne", "Action", "Projet Universitaire", "2025", "LOG725"]
+      en: ["University", "Action", "3rd Person"],
+      fr: ["Université", "Action", "3ème personne"]
     },
     technologies: [
       { name: "Unreal Engine 5", icon: "skill-icons:unrealengine" },
@@ -53,21 +53,21 @@ const projectsData: Project[] = [
     title: "Panic On Comic City !",
     description: {
       en: [
-        "🏆 Won Best Accessibility Award & Nominated for Best Design and Best Technical Innovation at the Ubisoft Gamelab 2026. An asymmetrical co-op game with an 80s-90s theme, developed over 10 weeks.",
-        "Collaborated closely with artists and game designers under strict deadlines.",
-        "Applied 2D mathematics to calculate custom physics for a player (the roller) sliding along a dynamically moving and deforming mesh (the snake).",
-        "Developed the core gameplay architecture inspired by Curve Rush mechanics."
+        "🏆 Best Accessibility Award at Ubisoft Game Lab 2026 (also nominated for Best Design and Best Technical Innovation). An 80s-90s themed asymmetrical co-op endless runner, built in 10 weeks by a team of 8, where I was the main programmer.",
+        "Wrote custom 2D physics so one player (the roller) rides the other player's ramp (the snake), a mesh that moves and deforms in real time.",
+        "Designed and built the tricks, combos, and scoring system.",
+        "Exposed difficulty settings for accessibility, and worked closely with artists and game designers under tight deadlines."
       ],
       fr: [
-        "🏆 Prix de la Meilleure Accessibilité & Nommé pour le Meilleur Design et la Meilleure Innovation Technique au Concours Universitaire Ubisoft 2026. Un jeu de coopération asymétrique sur le thème des années 80-90, développé en 10 semaines.",
-        "Collaboration étroite avec des artistes et game designers sous des délais serrés.",
-        "Application des mathématiques 2D pour calculer la physique personnalisée d'un joueur (le roller) glissant le long d'un maillage en mouvement et en déformation dynamique (le serpent).",
-        "Développement de l'architecture de gameplay principale inspirée des mécaniques de Curve Rush."
+        "🏆 Prix de la Meilleure accessibilité à l'Ubisoft Game Lab 2026 (nommé aussi pour le Meilleur design et la Meilleure innovation technique). Un endless runner coopératif asymétrique sur le thème des années 80-90, réalisé en 10 semaines par une équipe de 8, en tant que programmeur principal.",
+        "Physique 2D sur mesure : un joueur (le roller) glisse sur la rampe de l'autre joueur (le serpent), un maillage qui bouge et se déforme en temps réel.",
+        "Conception et code des figures, des combos et du système de score.",
+        "Réglages de difficulté pour l'accessibilité, en collaboration étroite avec les artistes et game designers sous des délais serrés."
       ]
     },
     tags: {
-      en: ["Co-op", "PC", "GameLab 2026", "Asymmetrical", "Physics"],
-      fr: ["Co-op", "PC", "Cubi 2026", "Asymétrique", "Physique"]
+      en: ["Award-Winning", "University", "Co-op", "Physics"],
+      fr: ["Primé", "Université", "Co-op", "Physique"]
     },
     technologies: [
       { name: "Unity", icon: "skill-icons:unity-dark" },
@@ -92,12 +92,20 @@ const projectsData: Project[] = [
   {
     title: "Urbia",
     description: {
-      en: "A city-building simulation game developed on Unity for pedagogical purposes within the Urban Planning department at Cégep de Matane. Acted as a Programmer to resume development on an existing codebase where players must grow a city, manage resource constraints, and balance the escalating demands of an expanding population.",
-      fr: "Un jeu de simulation de construction de ville développé sur Unity à des fins pédagogiques pour le département d'urbanisme du Cégep de Matane. J'ai agi en tant que programmeur pour reprendre le développement sur une base de code existante, les joueurs doivent agrandir une ville, gérer les contraintes de ressources et équilibrer les demandes croissantes d'une population en pleine expansion."
+      en: [
+        "An educational city-builder made in Unity for the Urban Planning department at Cégep de Matane. Client project at CDRIN (10-week internship, team of 5), where I was the main programmer on a near-finished game.",
+        "Added new buildings, rules, flooding, and residential balance, then tuned the levels.",
+        "Worked weekly with a 3D artist, a manager, and the client; integrated 3D models and polished the game."
+      ],
+      fr: [
+        "Un jeu éducatif de gestion urbaine sous Unity pour le département d'urbanisme du Cégep de Matane. Projet client au CDRIN (stage de 10 semaines, équipe de 5), en tant que programmeur principal sur un jeu presque terminé.",
+        "Ajout de bâtiments, de règles, d'inondations et de l'équilibrage résidentiel, puis réglage des niveaux.",
+        "Travail hebdomadaire avec un artiste 3D, un gestionnaire et le client ; intégration de modèles 3D et polissage du jeu."
+      ]
     },
     tags: {
-      en: ["Simulation", "Internship", "2022", "City-Builder", "Management"],
-      fr: ["Simulation", "Stage", "2022", "Construction de ville", "Gestion"]
+      en: ["Internship", "Simulation", "City-Builder"],
+      fr: ["Stage", "Simulation", "Gestion urbaine"]
     },
     technologies: [
       { name: "Unity", icon: "skill-icons:unity-dark" },
@@ -117,21 +125,21 @@ const projectsData: Project[] = [
     title: "The Plague",
     description: {
       en: [
-        "🏆 Best Sound Design. A top-down, procedurally generated game developed in 48 hours during the Montreal GameJam. Reversing traditional roles, you play as the Black Plague with the objective of hunting down the doctor before he gathers a cure.",
-        "Stepped in as Game Designer to conceptualize mechanics aligned with the jam's constraints and communicated the technical vision to the team.",
-        "Programmed core C# mechanics, including camera controllers and base character movement.",
-        "Prototyped enemy AI behaviors (the Doctor) and managed project version control by resolving Git merge conflicts."
+        "🏆 Best Sound Design at the Montreal GameJam. A top-down game made in 48 hours by a team of 7, where you play as the Black Plague hunting down the Doctor before he finds a cure.",
+        "Co-designed the core loop: infect civilians to light up the map and track the Doctor.",
+        "Programmed the camera, character movement, and the Doctor's enemy AI.",
+        "Handled version control and resolved Git merge conflicts under jam pressure."
       ],
       fr: [
-        "🏆 Meilleur Sound Design. Un jeu en vue de dessus généré de manière procédurale, développé en 48 heures lors de la Montreal GameJam. Vous incarnez la peste noire avec pour objectif de traquer le médecin avant qu'il ne trouve un remède.",
-        "Rôle de Game Designer pour conceptualiser des mécaniques alignées sur les contraintes de la Jam et communiquer la vision technique à l'équipe.",
-        "Programmation des mécaniques C# de base, y compris les contrôleurs de caméra et les mouvements fondamentaux des personnages.",
-        "Prototype de l'IA ennemie (le Médecin) et gestion du contrôle de version en résolvant les conflits de fusion Git."
+        "🏆 Prix du Meilleur design sonore à la Montréal GameJam. Un jeu en vue de dessus réalisé en 48 h par une équipe de 7, où vous incarnez la peste noire qui traque le Docteur avant qu'il ne trouve un remède.",
+        "Co-conception de la boucle de jeu : infecter les civils pour éclairer la carte et traquer le Docteur.",
+        "Programmation de la caméra, du déplacement des personnages et de l'IA ennemie du Docteur.",
+        "Gestion du contrôle de version et résolution des conflits Git sous la pression de la jam."
       ]
     },
     tags: {
-      en: ["GameJam", "2023", "Procedural Generation", "Top-Down", "AI"],
-      fr: ["GameJam", "2023", "Génération Procédurale", "Vue de dessus", "IA"]
+      en: ["Award-Winning", "Game Jam", "Top-Down", "AI"],
+      fr: ["Primé", "Game Jam", "Vue de dessus", "IA"]
     },
     technologies: [
       { name: "Unity", icon: "skill-icons:unity-dark" },
@@ -148,25 +156,28 @@ const projectsData: Project[] = [
     title: "Tower Defense Prototype",
     description: {
       en: [
-        "Designed and developed gameplay, UI/UX, and code architecture utilizing a combination of C++ and Blueprints under Unreal Engine 5.",
-        "Leveraged ChatGPT to accelerate engine onboarding and research optimal architectural patterns.",
-        "Developed a scalable foundational base to facilitate easy gameplay extensions and data-driven implementation."
+        "A solo tower defense game built on my own game idea in Unreal Engine 5 (C++ and Blueprints). Playable from start to finish, now in polish.",
+        "Extended the Gameplay Ability System to drive tower, enemy, and boss stats and abilities.",
+        "Wrote Python build and test scripts, and an Excel import tool for game data.",
+        "Built a scalable, data-driven base so new gameplay content is easy to add."
       ],
       fr: [
-        "Conception et développement du gameplay, de l'UI/UX et de l'architecture du code à l'aide d'une combinaison de C++ et de Blueprints sous Unreal Engine 5.",
-        "Utilisation de ChatGPT pour accélérer la prise en main du moteur et rechercher des patterns architecturaux optimaux.",
-        "Développement d'une base évolutive pour faciliter l'extension des fonctionnalités et l'implémentation guidée par les données."
+        "Un tower defense développé seul à partir de ma propre idée de jeu sous Unreal Engine 5 (C++ et Blueprints). Jouable du début à la fin, en cours de finition.",
+        "Extension du Gameplay Ability System pour les stats et capacités des tours, ennemis et boss.",
+        "Scripts Python de build et de test, et outil d'import des données de jeu depuis Excel.",
+        "Base évolutive et pilotée par les données pour ajouter facilement du contenu de gameplay."
       ]
     },
     tags: {
-      en: ["Tower Defense", "On Going", "Strategy"],
-      fr: ["Tower Defense", "En cours", "Stratégie"]
+      en: ["Solo", "Strategy", "Ongoing"],
+      fr: ["Solo", "Stratégie", "En cours"]
     },
     technologies: [
       { name: "Unreal Engine 5", icon: "skill-icons:unrealengine" },
       { name: "C++", icon: "skill-icons:cpp" },
       { name: "Blueprints", icon: "mdi:file-tree" },
-      { name: "3D Mathematics", icon: "mdi:math-compass" }
+      { name: "Gameplay Ability System", icon: "mdi:lightning-bolt" },
+      { name: "Python", icon: "skill-icons:python-dark" }
     ],
     media: [
       "https://youtu.be/6oPt-Pxkykk"
@@ -181,8 +192,8 @@ const projectsData: Project[] = [
       fr: "Un jeu de stratégie tactique en 2D au tour par tour se déroulant dans un donjon médiéval-fantastique. Dirigez un héros à travers les salles, gagnez de l'expérience, ouvrez des coffres et gérez vos points d'action pour vaincre le boss final. Développé en équipe de 6 personnes durant mon cursus universitaire en informatique."
     },
     tags: {
-      en: ["Turn-based", "2021", "2D", "Tactical RPG"],
-      fr: ["Tour par tour", "2021", "2D", "RPG Tactique"]
+      en: ["University", "Strategy", "Turn-Based"],
+      fr: ["Université", "Stratégie", "Tour par tour"]
     },
     technologies: [
       { name: "Unity", icon: "skill-icons:unity-dark" },
@@ -206,8 +217,8 @@ const projectsData: Project[] = [
       fr: "Un jeu de tir à la première personne solo mettant en scène des mécaniques de mouvement dynamiques telles que le double saut, le grappin, la glissade et les tirs par ricochet. Chaque niveau restreint ou active des mécaniques spécifiques, forçant le joueur à s'adapter. Développé de manière autonome sous la supervision des professeurs lors de mon semestre d'échange à Matane."
     },
     tags: {
-      en: ["FPS", "2022", "Movement Shooter", "Solo"],
-      fr: ["FPS", "2022", "Shooter de mouvement", "Solo"]
+      en: ["University", "Solo", "Action", "FPS"],
+      fr: ["Université", "Solo", "Action", "FPS"]
     },
     technologies: [
       { name: "Unreal Engine 4", icon: "skill-icons:unrealengine" },
